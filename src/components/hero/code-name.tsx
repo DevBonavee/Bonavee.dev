@@ -2,7 +2,7 @@
 
 import { useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { BOOT_MS } from "@/lib/intro";
+import { bootDelay } from "@/lib/intro";
 
 const TOKENS = [
   { text: "<", className: "tk-p" },
@@ -28,7 +28,7 @@ export function CodeName() {
       setTyped(++k);
       if (k < TOTAL) timer = setTimeout(step, 70 + Math.random() * 90);
     };
-    timer = setTimeout(step, BOOT_MS + 100);
+    timer = setTimeout(step, bootDelay() + 100);
     return () => clearTimeout(timer);
   }, [reduce]);
 

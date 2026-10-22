@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/motion/reveal";
 import { site } from "@content/site";
 import { CopyEmail } from "./copy-email";
 
@@ -68,30 +69,32 @@ export function Contact() {
           </ul>
         </div>
 
-        <div className="card book-card">
-          <div className="head">
-            <h3>Book a 30-min call</h3>
-            <span className="tag">Google Calendar</span>
+        <Reveal>
+          <div className="card book-card">
+            <div className="head">
+              <h3>Book a 30-min call</h3>
+              <span className="tag">Google Calendar</span>
+            </div>
+            <p>Pick a time that suits you on my Google Calendar booking page.</p>
+            <a className="btn magnetic" href={booking} target="_blank" rel="noopener noreferrer">
+              Open booking page
+              <svg
+                className="arrow"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+              <span className="sr-only">(opens in a new tab)</span>
+            </a>
+            <CopyEmail email={site.email} />
           </div>
-          <p>Pick a time that suits you on my Google Calendar booking page.</p>
-          <a className="btn magnetic" href={booking} target="_blank" rel="noopener noreferrer">
-            Open booking page
-            <svg
-              className="arrow"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.4"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M5 12h14M13 6l6 6-6 6" />
-            </svg>
-            <span className="sr-only">(opens in a new tab)</span>
-          </a>
-          <CopyEmail email={site.email} />
-        </div>
+        </Reveal>
       </div>
     </section>
   );

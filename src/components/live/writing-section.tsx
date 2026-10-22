@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/motion/reveal";
 import { site } from "@content/site";
 import { getPosts } from "@/lib/medium";
 import { SecHead } from "../sections/sec-head";
@@ -38,8 +39,8 @@ export async function WritingSection() {
 
         {posts?.length ? (
           <ul className="posts">
-            {posts.map((p) => (
-              <li key={p.link}>
+            {posts.map((p, i) => (
+              <Reveal as="li" key={p.link} i={i}>
                 <a className="post" href={p.link} target="_blank" rel="noopener noreferrer">
                   <span className="pm">
                     <time dateTime={p.date}>{postDate(p.date)}</time> · {p.minutes} min
@@ -60,7 +61,7 @@ export async function WritingSection() {
                     <span className="sr-only">(opens in a new tab)</span>
                   </span>
                 </a>
-              </li>
+              </Reveal>
             ))}
           </ul>
         ) : (

@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/motion/reveal";
 import { site } from "@content/site";
 import { getGitHub, type Activity } from "@/lib/github";
 import { SecHead } from "../sections/sec-head";
@@ -102,111 +103,111 @@ export async function GitHubSection() {
         ) : (
           <>
             <div className="gh-grid">
-              <div className="card contrib">
-                {gh.calendar ? (
-                  <>
-                    <div className="contrib-head">
-                      <div>
-                        <strong>
-                          <CountUp value={gh.calendar.total} />
-                        </strong>{" "}
-                        <span>contributions in the last year</span>
-                      </div>
-                    </div>
-                    <ContribGraph calendar={gh.calendar} />
-                    <div className="legend" aria-hidden="true">
-                      Less <i data-l="0" />
-                      <i data-l="1" />
-                      <i data-l="2" />
-                      <i data-l="3" />
-                      <i data-l="4" /> More
-                    </div>
-                  </>
-                ) : (
-                  <p className="contrib-note">
-                    The contribution graph is unavailable right now.{" "}
-                    <a href={PROFILE} target="_blank" rel="noopener noreferrer">
-                      See it on GitHub ↗
-                    </a>
-                  </p>
-                )}
-                {stats.length > 0 && (
-                  <dl className="gh-stats">
-                    {stats.map((s) => (
-                      <div key={s.label}>
-                        <dt>{s.label}</dt>
-                        <dd>
-                          <CountUp value={s.value} />
-                        </dd>
-                      </div>
-                    ))}
-                  </dl>
-                )}
-              </div>
-
-              <aside className="card feed" aria-label="Recent GitHub activity">
-                <h3>Recent activity</h3>
-                {gh.activity?.length ? (
-                  <ul>
-                    {gh.activity.map((a) => (
-                      <li key={a.id}>
-                        <span className="ic" aria-hidden="true">
-                          {ICONS[a.kind]}
-                        </span>
+              <Reveal i={0}>
+                <div className="card contrib">
+                  {gh.calendar ? (
+                    <>
+                      <div className="contrib-head">
                         <div>
-                          <a href={a.url} target="_blank" rel="noopener noreferrer">
-                            {a.text} <b>{a.target}</b>
-                            {a.suffix && ` ${a.suffix}`}
-                          </a>
-                          <span className="t">
-                            <RelTime iso={a.at} />
-                          </span>
+                          <strong>
+                            <CountUp value={gh.calendar.total} />
+                          </strong>{" "}
+                          <span>contributions in the last year</span>
                         </div>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="text-muted m-0 text-sm">
-                    {gh.activity ? "No public activity lately." : "Activity is unavailable right now."}
-                  </p>
-                )}
-              </aside>
+                      </div>
+                      <ContribGraph calendar={gh.calendar} />
+                      <div className="legend" aria-hidden="true">
+                        Less <i data-l="0" />
+                        <i data-l="1" />
+                        <i data-l="2" />
+                        <i data-l="3" />
+                        <i data-l="4" /> More
+                      </div>
+                    </>
+                  ) : (
+                    <p className="contrib-note">
+                      The contribution graph is unavailable right now.{" "}
+                      <a href={PROFILE} target="_blank" rel="noopener noreferrer">
+                        See it on GitHub ↗
+                      </a>
+                    </p>
+                  )}
+                  {stats.length > 0 && (
+                    <dl className="gh-stats">
+                      {stats.map((s) => (
+                        <div key={s.label}>
+                          <dt>{s.label}</dt>
+                          <dd>
+                            <CountUp value={s.value} />
+                          </dd>
+                        </div>
+                      ))}
+                    </dl>
+                  )}
+                </div>
+              </Reveal>
+
+              <Reveal i={1}>
+                <aside className="card feed" aria-label="Recent GitHub activity">
+                  <h3>Recent activity</h3>
+                  {gh.activity?.length ? (
+                    <ul>
+                      {gh.activity.map((a) => (
+                        <li key={a.id}>
+                          <span className="ic" aria-hidden="true">
+                            {ICONS[a.kind]}
+                          </span>
+                          <div>
+                            <a href={a.url} target="_blank" rel="noopener noreferrer">
+                              {a.text} <b>{a.target}</b>
+                              {a.suffix && ` ${a.suffix}`}
+                            </a>
+                            <span className="t">
+                              <RelTime iso={a.at} />
+                            </span>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="text-muted m-0 text-sm">
+                      {gh.activity ? "No public activity lately." : "Activity is unavailable right now."}
+                    </p>
+                  )}
+                </aside>
+              </Reveal>
             </div>
 
             {gh.repos && gh.repos.length > 0 && (
               <div className="repos">
-                {gh.repos.map((r) => (
-                  <a
-                    key={r.name}
-                    className="card spot repo"
-                    href={r.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span className="name">
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        aria-hidden="true"
-                      >
-                        <path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z" />
-                        <path d="M5 17a3 3 0 0 1 3-3h11" />
-                      </svg>
-                      {r.name}
-                    </span>
-                    {r.description && <p>{r.description}</p>}
-                    <span className="foot">
-                      {r.language && (
-                        <span className="lang">
-                          <i style={{ background: LANG_COLORS[r.language] ?? "var(--faint)" }} />
-                          {r.language}
-                        </span>
-                      )}
-                      <span aria-label={`${r.stars} stars`}>★ {r.stars}</span>
-                    </span>
-                  </a>
+                {gh.repos.map((r, i) => (
+                  <Reveal key={r.name} i={i}>
+                    <a className="card spot repo" href={r.url} target="_blank" rel="noopener noreferrer">
+                      <span className="name">
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          aria-hidden="true"
+                        >
+                          <path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z" />
+                          <path d="M5 17a3 3 0 0 1 3-3h11" />
+                        </svg>
+                        {r.name}
+                      </span>
+                      {r.description && <p>{r.description}</p>}
+                      <span className="foot">
+                        {r.language && (
+                          <span className="lang">
+                            <i style={{ background: LANG_COLORS[r.language] ?? "var(--faint)" }} />
+                            {r.language}
+                          </span>
+                        )}
+                        <span aria-label={`${r.stars} stars`}>★ {r.stars}</span>
+                      </span>
+                    </a>
+                  </Reveal>
                 ))}
               </div>
             )}

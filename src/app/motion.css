@@ -1,0 +1,182 @@
+/* Motion layer: intro overlay, section reveals, custom cursor, theme wipe. Ported from design/mockup.html. */
+@layer components {
+  /* ---------- intro ---------- */
+  .boot,
+  .boot-y {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    clip-path: inset(0 0 0 0);
+    display: none;
+  }
+  [data-intro="play"] .boot {
+    z-index: 101;
+    background: var(--bg);
+    display: grid;
+    place-items: center;
+    animation: wipe 0.75s 1.05s cubic-bezier(0.75, 0, 0.2, 1) forwards;
+  }
+  [data-intro="play"] .boot-y {
+    z-index: 100;
+    background: var(--accent);
+    display: block;
+    animation: wipe 0.75s 1.25s cubic-bezier(0.75, 0, 0.2, 1) forwards;
+  }
+  [data-intro="play"] .hero {
+    --boot: 1.35s;
+  }
+  .boot-in {
+    width: min(340px, calc(100vw - 48px));
+    font-family: var(--font-mono);
+    font-size: 13px;
+    display: grid;
+    gap: 14px;
+  }
+  .boot-lines {
+    display: grid;
+    gap: 6px;
+    color: var(--muted);
+  }
+  .boot-lines span {
+    opacity: 0;
+    transform: translateY(6px);
+    animation: bootline 0.3s forwards;
+  }
+  .boot-lines span:nth-child(1) {
+    animation-delay: 0.05s;
+    color: var(--fg);
+  }
+  .boot-lines span:nth-child(2) {
+    animation-delay: 0.3s;
+  }
+  .boot-lines span:nth-child(3) {
+    animation-delay: 0.55s;
+  }
+  .boot-lines span:nth-child(4) {
+    animation-delay: 0.78s;
+    color: var(--accent-text);
+  }
+  .boot-lines b {
+    color: var(--ok);
+    font-weight: 500;
+  }
+  .boot-bar {
+    height: 3px;
+    border-radius: 3px;
+    background: var(--line);
+    overflow: hidden;
+  }
+  .boot-bar i {
+    display: block;
+    height: 100%;
+    background: var(--accent);
+    transform-origin: left;
+    transform: scaleX(0);
+    animation: bootbar 0.95s 0.05s cubic-bezier(0.6, 0, 0.2, 1) forwards;
+  }
+
+  /* ---------- section heading reveal ---------- */
+  .sec-head h2 {
+    clip-path: inset(-10% -10% -20% -10%);
+    transition:
+      clip-path 1s cubic-bezier(0.7, 0, 0.2, 1),
+      transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .sec-head .path {
+    transition:
+      opacity 0.6s 0.15s,
+      transform 0.6s 0.15s;
+  }
+  .sec-head.hpre h2 {
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(40%);
+    transition: none;
+  }
+  .sec-head.hpre .path {
+    opacity: 0;
+    transform: translateX(-14px);
+    transition: none;
+  }
+  /* Reveal wrappers around cards: keep grid sizing intact. */
+  .rv {
+    min-width: 0;
+  }
+  .rv > .card {
+    height: 100%;
+  }
+  /* Hold one-shot fills until their card is revealed, so they play on screen. */
+  [data-reveal="hidden"] .bar i,
+  [data-reveal="hidden"] .readbar i,
+  [data-reveal="hidden"] .bars i {
+    animation-play-state: paused;
+  }
+
+  /* ---------- custom cursor ---------- */
+  .cursor {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 34px;
+    height: 34px;
+    margin: -17px 0 0 -17px;
+    border: 1.5px solid var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 90;
+    transform: translate(-100px, -100px);
+    transition:
+      width 0.25s,
+      height 0.25s,
+      margin 0.25s,
+      background 0.25s;
+    mix-blend-mode: difference;
+  }
+  .cursor.big {
+    width: 64px;
+    height: 64px;
+    margin: -32px 0 0 -32px;
+    background: rgba(255, 208, 0, 0.15);
+  }
+}
+
+/* ---------- theme wipe (View Transitions) ---------- */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-new(root) {
+  z-index: 2;
+}
+
+@keyframes wipe {
+  to {
+    clip-path: inset(0 0 100% 0);
+    visibility: hidden;
+  }
+}
+@keyframes bootline {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes bootbar {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .boot,
+  .boot-y,
+  .cursor {
+    display: none !important;
+  }
+  .sec-head.hpre h2,
+  .sec-head.hpre .path {
+    clip-path: none;
+    transform: none;
+    opacity: 1;
+  }
+}

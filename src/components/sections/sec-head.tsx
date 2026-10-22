@@ -1,3 +1,5 @@
+import { RevealHead } from "@/components/motion/reveal";
+
 // Section heading: mono "file path" eyebrow, big display title, optional intro line.
 export function SecHead({
   path,
@@ -9,13 +11,13 @@ export function SecHead({
   children?: React.ReactNode;
 }) {
   return (
-    <div className="sec-head">
+    <RevealHead>
       <div>
         <div className="path">{path}</div>
         <h2>{title}</h2>
       </div>
       {children && <p>{children}</p>}
-    </div>
+    </RevealHead>
   );
 }
 

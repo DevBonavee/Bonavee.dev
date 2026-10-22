@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/motion/reveal";
 import Image from "next/image";
 import { projects } from "@content/projects";
 import { publicFileExists } from "@/lib/public-file";
@@ -62,57 +63,59 @@ export function Portfolio() {
 
         <div className="projects">
           {projects.map((p, i) => (
-            <article key={p.title} className="card proj">
-              <div className="shot">
-                <div className="win">
-                  <div className="chrome" aria-hidden="true">
-                    <i />
-                    <i />
-                    <i />
-                  </div>
-                  {publicFileExists(p.image) ? (
-                    <div className="screen">
-                      <Image
-                        src={p.image}
-                        alt={`Screenshot of ${p.title}`}
-                        fill
-                        sizes="(min-width: 1180px) 360px, (min-width: 720px) 50vw, 100vw"
-                      />
+            <Reveal key={p.title} i={i}>
+              <article className="card proj tilt">
+                <div className="shot">
+                  <div className="win">
+                    <div className="chrome" aria-hidden="true">
+                      <i />
+                      <i />
+                      <i />
                     </div>
-                  ) : (
-                    <Placeholder variant={i % 3} />
+                    {publicFileExists(p.image) ? (
+                      <div className="screen">
+                        <Image
+                          src={p.image}
+                          alt={`Screenshot of ${p.title}`}
+                          fill
+                          sizes="(min-width: 1180px) 360px, (min-width: 720px) 50vw, 100vw"
+                        />
+                      </div>
+                    ) : (
+                      <Placeholder variant={i % 3} />
+                    )}
+                  </div>
+                </div>
+                <div className="body">
+                  <h3>
+                    {p.title}
+                    <SampleTag show={p.sample} />
+                  </h3>
+                  <p>{p.description}</p>
+                  <div className="chips">
+                    {p.tags.map((t) => (
+                      <span key={t} className="tag">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                  {(p.demo || p.source) && (
+                    <div className="links">
+                      {p.demo && (
+                        <a href={p.demo} target="_blank" rel="noopener noreferrer">
+                          Live demo ↗<span className="sr-only"> for {p.title} (opens in a new tab)</span>
+                        </a>
+                      )}
+                      {p.source && (
+                        <a href={p.source} target="_blank" rel="noopener noreferrer">
+                          Source ↗<span className="sr-only"> for {p.title} (opens in a new tab)</span>
+                        </a>
+                      )}
+                    </div>
                   )}
                 </div>
-              </div>
-              <div className="body">
-                <h3>
-                  {p.title}
-                  <SampleTag show={p.sample} />
-                </h3>
-                <p>{p.description}</p>
-                <div className="chips">
-                  {p.tags.map((t) => (
-                    <span key={t} className="tag">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                {(p.demo || p.source) && (
-                  <div className="links">
-                    {p.demo && (
-                      <a href={p.demo} target="_blank" rel="noopener noreferrer">
-                        Live demo ↗<span className="sr-only"> for {p.title} (opens in a new tab)</span>
-                      </a>
-                    )}
-                    {p.source && (
-                      <a href={p.source} target="_blank" rel="noopener noreferrer">
-                        Source ↗<span className="sr-only"> for {p.title} (opens in a new tab)</span>
-                      </a>
-                    )}
-                  </div>
-                )}
-              </div>
-            </article>
+              </article>
+            </Reveal>
           ))}
         </div>
       </div>

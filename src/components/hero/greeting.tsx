@@ -2,7 +2,7 @@
 
 import { useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { BOOT_MS } from "@/lib/intro";
+import { bootDelay } from "@/lib/intro";
 
 function partOfDay(h: number) {
   if (h >= 5 && h < 12) return "morning";
@@ -29,7 +29,7 @@ export function Greeting() {
       setShown(++k);
       if (k < full.length) timer = setTimeout(step, 38 + Math.random() * 40);
     };
-    timer = setTimeout(step, BOOT_MS + 1150);
+    timer = setTimeout(step, bootDelay() + 1150);
     return () => clearTimeout(timer);
   }, [reduce]);
 

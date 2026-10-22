@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/motion/reveal";
 import { cvs } from "@content/cvs";
 import { education, experience, facts } from "@content/resume";
 import { CvTabs } from "./cv-tabs";
@@ -24,55 +25,59 @@ export function Resume() {
         </SecHead>
 
         <div className="resume">
-          <aside className="card r-side" aria-label="Résumé downloads">
-            <CvTabs cvs={cvs} />
-            <dl>
-              {facts.map((f) => (
-                <div key={f.label}>
-                  <dt>{f.label}</dt>
-                  <dd>{f.value}</dd>
-                </div>
-              ))}
-            </dl>
-          </aside>
+          <Reveal i={0}>
+            <aside className="card r-side" aria-label="Résumé downloads">
+              <CvTabs cvs={cvs} />
+              <dl>
+                {facts.map((f) => (
+                  <div key={f.label}>
+                    <dt>{f.label}</dt>
+                    <dd>{f.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </aside>
+          </Reveal>
 
-          <div className="card timeline">
-            <div className="tl-group">
-              <h3 className="eyebrow">Experience</h3>
-              {experience.map((j) => (
-                <div key={`${j.role}-${j.org}`} className="job">
-                  <div className="when">
-                    {j.when} {j.live && <span className="live">now</span>}
+          <Reveal i={1}>
+            <div className="card timeline">
+              <div className="tl-group">
+                <h3 className="eyebrow">Experience</h3>
+                {experience.map((j) => (
+                  <div key={`${j.role}-${j.org}`} className="job">
+                    <div className="when">
+                      {j.when} {j.live && <span className="live">now</span>}
+                    </div>
+                    <div>
+                      <h4>
+                        {j.role} <span>· {j.org}</span>
+                      </h4>
+                      {j.points.length > 0 && (
+                        <ul>
+                          {j.points.map((p) => (
+                            <li key={p}>{p}</li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
                   </div>
-                  <div>
-                    <h4>
-                      {j.role} <span>· {j.org}</span>
-                    </h4>
-                    {j.points.length > 0 && (
-                      <ul>
-                        {j.points.map((p) => (
-                          <li key={p}>{p}</li>
-                        ))}
-                      </ul>
-                    )}
+                ))}
+              </div>
+              <div className="tl-group">
+                <h3 className="eyebrow">Education</h3>
+                {education.map((e) => (
+                  <div key={e.title} className="job">
+                    <div className="when">{e.when}</div>
+                    <div>
+                      <h4>
+                        {e.title} <span>· {e.org}</span>
+                      </h4>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-            <div className="tl-group">
-              <h3 className="eyebrow">Education</h3>
-              {education.map((e) => (
-                <div key={e.title} className="job">
-                  <div className="when">{e.when}</div>
-                  <div>
-                    <h4>
-                      {e.title} <span>· {e.org}</span>
-                    </h4>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

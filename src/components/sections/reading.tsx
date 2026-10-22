@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/motion/reveal";
 import Image from "next/image";
 import { books } from "@content/books";
 import { publicFileExists } from "@/lib/public-file";
@@ -47,7 +48,7 @@ export function Reading() {
             const progress = Math.max(0, Math.min(100, b.progress));
             const hasCover = publicFileExists(b.cover);
             return (
-              <li key={b.title} className="book">
+              <Reveal as="li" key={b.title} i={i} className="book">
                 <div className={hasCover ? "cover" : `cover ${COVER_STYLES[i % COVER_STYLES.length]}`}>
                   {hasCover ? (
                     <Image
@@ -84,7 +85,7 @@ export function Reading() {
                     <i style={{ "--w": `${progress}%` } as React.CSSProperties} />
                   </div>
                 </div>
-              </li>
+              </Reveal>
             );
           })}
         </ul>

@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import { Reveal } from "@/components/motion/reveal";
 import { SecHead } from "./sec-head";
 
 const FRONTEND = ["HTML", "CSS", "Tailwind", "JavaScript", "TypeScript", "React", "Next.js"];
@@ -47,26 +48,32 @@ export function Stack() {
         </SecHead>
 
         <div className="stack-grid">
-          <TechCard title="Frontend" items={FRONTEND} />
-          <TechCard title="Backend" items={BACKEND} />
-          <div className="card pipeline">
-            <h3>How a request flows</h3>
-            <ol className="pipe">
-              {FLOW.map((n, i) => (
-                <Fragment key={n.name}>
-                  {i > 0 && (
-                    <li className="wire" aria-hidden="true">
-                      <i style={{ "--dl": `${(i - 1) * 0.45}s` } as React.CSSProperties} />
+          <Reveal i={0}>
+            <TechCard title="Frontend" items={FRONTEND} />
+          </Reveal>
+          <Reveal i={1}>
+            <TechCard title="Backend" items={BACKEND} />
+          </Reveal>
+          <Reveal i={2} className="col-span-full">
+            <div className="card pipeline">
+              <h3>How a request flows</h3>
+              <ol className="pipe">
+                {FLOW.map((n, i) => (
+                  <Fragment key={n.name}>
+                    {i > 0 && (
+                      <li className="wire" aria-hidden="true">
+                        <i style={{ "--dl": `${(i - 1) * 0.45}s` } as React.CSSProperties} />
+                      </li>
+                    )}
+                    <li className={n.hot ? "pnode hot" : "pnode"}>
+                      <b>{n.name}</b>
+                      <small>{n.note}</small>
                     </li>
-                  )}
-                  <li className={n.hot ? "pnode hot" : "pnode"}>
-                    <b>{n.name}</b>
-                    <small>{n.note}</small>
-                  </li>
-                </Fragment>
-              ))}
-            </ol>
-          </div>
+                  </Fragment>
+                ))}
+              </ol>
+            </div>
+          </Reveal>
         </div>
       </div>
     </section>

@@ -72,7 +72,7 @@ export function Nav() {
         <div className="nav-right">
           <StatusPill />
           <ThemeToggle />
-          <a className="btn sm" href="#contact">
+          <a className="btn sm magnetic" href="#contact">
             Book a call
           </a>
         </div>

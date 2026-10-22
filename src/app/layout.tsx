@@ -1,8 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { site } from "@content/site";
 import { Footer } from "@/components/footer";
+import { Intro } from "@/components/motion/intro";
+import { PointerFx } from "@/components/motion/pointer-fx";
 import { Nav } from "@/components/nav/nav";
 import { Providers } from "@/components/providers";
+import { INTRO_SCRIPT } from "@/lib/intro";
 import { instrumentSans, jetbrainsMono, unbounded } from "./fonts";
 import "./globals.css";
 
@@ -29,9 +32,15 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       suppressHydrationWarning
       className={`${unbounded.variable} ${instrumentSans.variable} ${jetbrainsMono.variable}`}
     >
+      <head>
+        {/* Decides before first paint whether the intro plays, so the page never flashes. */}
+        <script dangerouslySetInnerHTML={{ __html: INTRO_SCRIPT }} />
+      </head>
       <body>
         <Providers>
+          <Intro />
           <div className="grain" aria-hidden="true" />
+          <PointerFx />
           <Nav />
           {children}
           <Footer />

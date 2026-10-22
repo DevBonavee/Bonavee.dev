@@ -1,0 +1,121 @@
+import Image from "next/image";
+import { projects } from "@content/projects";
+import { publicFileExists } from "@/lib/public-file";
+import { SampleTag, SecHead } from "./sec-head";
+
+// Drawn stand-ins for a missing screenshot, cycling through three looks.
+function Placeholder({ variant }: { variant: number }) {
+  if (variant === 1)
+    return (
+      <div className="canvas" aria-hidden="true">
+        <div className="sk y w-[35%]" />
+        <div className="chat a sm">Summarise this PDF in 5 bullets</div>
+        <div className="chat u sm">1. Revenue grew 18%…</div>
+        <div className="sk w-[55%]" />
+      </div>
+    );
+  if (variant === 2)
+    return (
+      <div className="canvas" aria-hidden="true">
+        <div className="sk big w-[45%]" />
+        <div className="tiles">
+          {Array.from({ length: 6 }, (_, i) => (
+            <i key={i} />
+          ))}
+        </div>
+      </div>
+    );
+  return (
+    <div className="canvas" aria-hidden="true">
+      <div className="sk big" />
+      <div className="sk w-[80%]" />
+      <div className="bars">
+        {[40, 70, 55, 90, 65, 100, 75].map((h, i) => (
+          <i key={i} style={{ height: `${h}%` }} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export function Portfolio() {
+  const anySample = projects.some((p) => p.sample);
+
+  return (
+    <section className="block" id="portfolio">
+      <div className="wrap">
+        <SecHead
+          path={
+            <>
+              ~/<b>portfolio/</b>
+            </>
+          }
+          title={
+            <>
+              My <em>portfolio</em>
+            </>
+          }
+        >
+          Past projects with screenshots, live demos and source.{" "}
+          <SampleTag show={anySample}>sample projects</SampleTag>
+        </SecHead>
+
+        <div className="projects">
+          {projects.map((p, i) => (
+            <article key={p.title} className="card proj">
+              <div className="shot">
+                <div className="win">
+                  <div className="chrome" aria-hidden="true">
+                    <i />
+                    <i />
+                    <i />
+                  </div>
+                  {publicFileExists(p.image) ? (
+                    <div className="screen">
+                      <Image
+                        src={p.image}
+                        alt={`Screenshot of ${p.title}`}
+                        fill
+                        sizes="(min-width: 1180px) 360px, (min-width: 720px) 50vw, 100vw"
+                      />
+                    </div>
+                  ) : (
+                    <Placeholder variant={i % 3} />
+                  )}
+                </div>
+              </div>
+              <div className="body">
+                <h3>
+                  {p.title}
+                  <SampleTag show={p.sample} />
+                </h3>
+                <p>{p.description}</p>
+                <div className="chips">
+                  {p.tags.map((t) => (
+                    <span key={t} className="tag">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+                {(p.demo || p.source) && (
+                  <div className="links">
+                    {p.demo && (
+                      <a href={p.demo} target="_blank" rel="noopener noreferrer">
+                        Live demo ↗<span className="sr-only"> for {p.title} (opens in a new tab)</span>
+                      </a>
+                    )}
+                    {p.source && (
+                      <a href={p.source} target="_blank" rel="noopener noreferrer">
+                        Source ↗<span className="sr-only"> for {p.title} (opens in a new tab)</span>
+                      </a>
+                    )}
+                  </div>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

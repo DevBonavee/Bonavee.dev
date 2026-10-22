@@ -1,29 +1,61 @@
-import { navLinks } from "@content/site";
 import { Hero } from "@/components/hero/hero";
+import { Building } from "@/components/sections/building";
+import { Contact } from "@/components/sections/contact";
+import { Marquee } from "@/components/sections/marquee";
+import { Portfolio } from "@/components/sections/portfolio";
+import { Reading } from "@/components/sections/reading";
+import { Resume } from "@/components/sections/resume";
+import { SecHead } from "@/components/sections/sec-head";
+import { Stack } from "@/components/sections/stack";
 
-// Sections below the hero are placeholders until phase 3.
+// Re-render hourly so the month-based shelf and live data stay current.
+export const revalidate = 3600;
+
 export default function Home() {
   return (
     <>
       <Hero />
+      <Marquee />
       <main>
-        {navLinks.map((l) => (
-          <section key={l.id} id={l.id} className="border-line border-b py-24">
-            <div className="wrap">
-              <p className="text-faint font-mono text-[12.5px]">~/{l.label}/</p>
-              <h2 className="font-display text-[clamp(34px,5.4vw,64px)] leading-[0.98] font-extrabold tracking-[-0.04em]">
-                {l.label}
-              </h2>
-            </div>
-          </section>
-        ))}
-        <section id="contact" className="py-24">
+        <Building />
+        {/* GitHub and Writing get their live data in phase 4. */}
+        <section className="block" id="github">
           <div className="wrap">
-            <h2 className="font-display text-[clamp(46px,7.6vw,108px)] leading-[0.9] font-black tracking-[-0.05em]">
-              Let&apos;s build something <span className="text-accent-text">good.</span>
-            </h2>
+            <SecHead
+              path={
+                <>
+                  github.com/<b>Bonvee120</b>
+                </>
+              }
+              title={
+                <>
+                  Shipping, <em>daily</em>
+                </>
+              }
+            />
           </div>
         </section>
+        <Portfolio />
+        <Stack />
+        <Reading />
+        <section className="block" id="writing">
+          <div className="wrap">
+            <SecHead
+              path={
+                <>
+                  bonavee120.medium.com/<b>feed</b>
+                </>
+              }
+              title={
+                <>
+                  Notes from <em>the build</em>
+                </>
+              }
+            />
+          </div>
+        </section>
+        <Resume />
+        <Contact />
       </main>
     </>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { useId, useRef, useState } from "react";
 import type { Cv } from "@content/cvs";
 
@@ -50,7 +50,7 @@ export function CvTabs({ cvs }: { cvs: Cv[] }) {
               onClick={() => setActive(i)}
               onKeyDown={(e) => onKey(e, i)}
             >
-              {i === active && <motion.span layoutId={`${id}-thumb`} className="thumb" transition={SPRING} />}
+              {i === active && <m.span layoutId={`${id}-thumb`} className="thumb" transition={SPRING} />}
               <span>{c.role}</span>
             </button>
           ))}
@@ -64,7 +64,7 @@ export function CvTabs({ cvs }: { cvs: Cv[] }) {
         className="grid gap-[22px]"
       >
         <AnimatePresence mode="wait" initial={false}>
-          <motion.p
+          <m.p
             key={cv.role}
             className="sum"
             initial={{ opacity: 0 }}
@@ -73,7 +73,7 @@ export function CvTabs({ cvs }: { cvs: Cv[] }) {
             transition={{ duration: 0.18 }}
           >
             {cv.summary}
-          </motion.p>
+          </m.p>
         </AnimatePresence>
         <a className="pdf" href={`/cv/${cv.file}`} download>
           <span className="file" aria-hidden="true">

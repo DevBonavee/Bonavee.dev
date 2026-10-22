@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { useCallback, useRef, useState } from "react";
 import type { HeroPhoto } from "@/lib/hero-photos";
@@ -99,7 +99,7 @@ export function PhotoCarousel({ photos }: { photos: HeroPhoto[] }) {
       )}
 
       <AnimatePresence mode="wait" initial={false}>
-        <motion.span
+        <m.span
           key={photos[current].caption}
           className="cap"
           initial={{ opacity: 0 }}
@@ -108,7 +108,7 @@ export function PhotoCarousel({ photos }: { photos: HeroPhoto[] }) {
           transition={{ duration: 0.25 }}
         >
           {photos[current].caption}
-        </motion.span>
+        </m.span>
       </AnimatePresence>
 
       {many && (

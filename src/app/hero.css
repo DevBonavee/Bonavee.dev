@@ -473,10 +473,12 @@
   .is-working .state-big .lamp {
     background: color-mix(in srgb, var(--ok) 16%, transparent);
   }
+  .state-big .lamp b {
+    position: relative;
+  }
   .is-working .state-big .lamp b {
     background: var(--ok);
     box-shadow: 0 0 18px 4px color-mix(in srgb, var(--ok) 60%, transparent);
-    animation: pulse 1.8s infinite;
   }
   .state-big strong {
     display: block;

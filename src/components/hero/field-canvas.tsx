@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { bootDelay } from "@/lib/intro";
 
 const S = 22; // grid pitch in px
 const SZ = S - 6; // square size
@@ -120,14 +121,31 @@ export function FieldCanvas() {
       raf = visible ? requestAnimationFrame(frame) : 0;
     };
 
+    let ready = false;
     const start = () => {
       if (reduce) draw(performance.now(), true);
-      else if (!raf) raf = requestAnimationFrame(frame);
+      else if (ready && !raf) raf = requestAnimationFrame(frame);
     };
 
     readColors();
     size();
-    start();
+    // Paint a still frame now; start animating once the page has loaded, the intro is done and the
+    // browser is idle, so the loop doesn't compete with hydration and first paint.
+    draw(performance.now(), true);
+    let idleId = 0;
+    let delayId: ReturnType<typeof setTimeout> | undefined;
+    const begin = () => {
+      delayId = setTimeout(() => {
+        const go = () => {
+          ready = true;
+          start();
+        };
+        if ("requestIdleCallback" in window) idleId = requestIdleCallback(go, { timeout: 1500 });
+        else go();
+      }, bootDelay());
+    };
+    if (document.readyState === "complete") begin();
+    else window.addEventListener("load", begin, { once: true });
 
     const onResize = () => {
       size();
@@ -160,6 +178,9 @@ export function FieldCanvas() {
     host.addEventListener("pointerleave", onLeave);
     return () => {
       cancelAnimationFrame(raf);
+      clearTimeout(delayId);
+      if (idleId) cancelIdleCallback(idleId);
+      window.removeEventListener("load", begin);
       themeObs.disconnect();
       io.disconnect();
       window.removeEventListener("resize", onResize);

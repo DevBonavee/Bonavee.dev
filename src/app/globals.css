@@ -14,7 +14,7 @@
   --raise-2: #25403a;
   --fg: #f2f1ec;
   --muted: #a8b7ae;
-  --faint: #6f857a;
+  --faint: #8fa398; /* brief: #6f857a, raised to pass WCAG AA (4.5:1) on bg and cards */
   --line: rgba(242, 241, 236, 0.11);
   --line-strong: rgba(242, 241, 236, 0.22);
   --accent: #ffd000;
@@ -40,7 +40,7 @@
     --raise-2: #efede5;
     --fg: #172923;
     --muted: #4c5f56;
-    --faint: #7d8c84;
+    --faint: #5e6d65; /* brief: #7d8c84, darkened for WCAG AA */
     --line: rgba(23, 41, 35, 0.12);
     --line-strong: rgba(23, 41, 35, 0.24);
     --accent-text: #806200;
@@ -61,7 +61,7 @@
   --raise-2: #efede5;
   --fg: #172923;
   --muted: #4c5f56;
-  --faint: #7d8c84;
+  --faint: #5e6d65; /* brief: #7d8c84, darkened for WCAG AA */
   --line: rgba(23, 41, 35, 0.12);
   --line-strong: rgba(23, 41, 35, 0.24);
   --accent-text: #806200;
@@ -283,6 +283,19 @@
   }
   .is-working .dot {
     background: var(--ok);
+  }
+  /* Pulse ring: a scaled, fading copy of the dot (transform + opacity only, so it never repaints). */
+  .dot::after,
+  .state-big .lamp b::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--ok);
+    opacity: 0;
+  }
+  .is-working .dot::after,
+  .is-working .state-big .lamp b::after {
     animation: pulse 1.8s infinite;
   }
 
@@ -447,6 +460,7 @@
     opacity: 0.05;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
     animation: grain 1.2s steps(6) infinite;
+    will-change: transform;
   }
 }
 
@@ -461,13 +475,13 @@
 }
 @keyframes pulse {
   0% {
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--ok) 70%, transparent);
+    transform: scale(1);
+    opacity: 0.7;
   }
-  70% {
-    box-shadow: 0 0 0 10px transparent;
-  }
+  70%,
   100% {
-    box-shadow: 0 0 0 0 transparent;
+    transform: scale(3.2);
+    opacity: 0;
   }
 }
 @keyframes grain {

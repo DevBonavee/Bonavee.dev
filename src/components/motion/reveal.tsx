@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView, useReducedMotion } from "framer-motion";
+import { m, useInView, useReducedMotion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 type State = "idle" | "hidden" | "shown";
@@ -46,7 +46,7 @@ export function Reveal({
 }) {
   const ref = useRef<HTMLDivElement & HTMLLIElement>(null);
   const state = useReveal(ref);
-  const Tag = as === "li" ? motion.li : motion.div;
+  const Tag = as === "li" ? m.li : m.div;
 
   return (
     <Tag

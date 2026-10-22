@@ -6,3 +6,6 @@ package-lock.json
 *.zip
 CLAUDE.md
 .playwright-mcp
+.agents
+.claude
+skills-lock.json

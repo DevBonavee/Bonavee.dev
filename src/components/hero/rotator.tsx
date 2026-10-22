@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
@@ -22,7 +22,7 @@ export function Rotator({ phrases }: { phrases: string[] }) {
     <>
       <span className="rot" aria-hidden="true">
         {phrases.map((p, i) => (
-          <motion.span
+          <m.span
             key={p}
             initial={false}
             animate={
@@ -35,7 +35,7 @@ export function Rotator({ phrases }: { phrases: string[] }) {
             transition={{ duration: 0.45, ease: EASE }}
           >
             {p}
-          </motion.span>
+          </m.span>
         ))}
       </span>
       <span className="sr-only">{phrases.join(", ")}</span>

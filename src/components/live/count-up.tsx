@@ -35,8 +35,9 @@ export function CountUp({ value }: { value: number }) {
   }, [inView, reduce, value]);
 
   return (
-    <span ref={ref} aria-label={fmt.format(value)}>
+    <span ref={ref}>
       <span aria-hidden="true">{fmt.format(shown)}</span>
+      <span className="sr-only">{fmt.format(value)}</span>
     </span>
   );
 }

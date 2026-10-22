@@ -9,10 +9,39 @@ import { INTRO_SCRIPT } from "@/lib/intro";
 import { instrumentSans, jetbrainsMono, unbounded } from "./fonts";
 import "./globals.css";
 
+const title = `${site.short} · ${site.role}`;
+const description = `${site.name} (${site.short}) builds web apps and AI features end to end with Next.js, TypeScript, FastAPI and LLM agents. Portfolio, live GitHub activity, writing and résumé.`;
+
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  title: `${site.short} · ${site.role}`,
-  description: `${site.name} (${site.short}), a ${site.role.toLowerCase()}. Next.js, TypeScript, FastAPI and AI agents.`,
+  title: { default: title, template: `%s · ${site.short}` },
+  description,
+  applicationName: `${site.short}.dev`,
+  authors: [{ name: site.name, url: site.url }],
+  creator: site.name,
+  keywords: [
+    site.name,
+    site.short,
+    "full-stack developer",
+    "AI engineer",
+    "Next.js",
+    "TypeScript",
+    "FastAPI",
+    "Python",
+    "LLM agents",
+    "portfolio",
+  ],
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: `${site.short}.dev`,
+    title,
+    description,
+    locale: "en",
+  },
+  twitter: { card: "summary_large_image", title, description, creator: "@Bonaventure_NC" },
+  robots: { index: true, follow: true },
 };
 
 export const viewport: Viewport = {

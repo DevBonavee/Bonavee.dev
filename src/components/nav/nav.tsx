@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useEffect, useState } from "react";
 import { navLinks } from "@content/site";
 import { StatusPill } from "./status-pill";
@@ -60,7 +60,7 @@ export function Nav() {
             >
               {l.label}
               {active === l.id && (
-                <motion.span
+                <m.span
                   layoutId="nav-ind"
                   className="nav-ind"
                   transition={{ type: "spring", stiffness: 420, damping: 32 }}

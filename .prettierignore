@@ -1,0 +1,8 @@
+.next
+node_modules
+design
+public
+package-lock.json
+*.zip
+CLAUDE.md
+.playwright-mcp

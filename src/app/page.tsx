@@ -1,17 +1,11 @@
 import { navLinks } from "@content/site";
+import { Hero } from "@/components/hero/hero";
 
-// Phase 1 shell: section anchors so the nav works. Each section is built out in later phases.
+// Sections below the hero are placeholders until phase 3.
 export default function Home() {
   return (
     <>
-      <header id="top" className="border-line relative border-b">
-        <div className="wrap pt-[132px] pb-[84px]">
-          <p className="text-accent-text font-mono">~/bonavee $</p>
-          <h1 className="font-display text-[clamp(40px,7vw,92px)] leading-none font-black tracking-[-0.05em]">
-            Bona<span className="text-accent">vee</span>
-          </h1>
-        </div>
-      </header>
+      <Hero />
       <main>
         {navLinks.map((l) => (
           <section key={l.id} id={l.id} className="border-line border-b py-24">

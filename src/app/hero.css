@@ -1,0 +1,585 @@
+/* Hero: contribution-field canvas, typed name, photo carousel and status card. Ported from design/mockup.html. */
+@layer components {
+  .hero {
+    --boot: 0s;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+  }
+  .hero .field {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(120% 90% at 20% 40%, transparent 30%, var(--bg) 85%);
+  }
+  .hero-grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    gap: 40px;
+    padding-block: 118px 64px;
+  }
+  @media (min-width: 960px) {
+    .hero-grid {
+      grid-template-columns: 1.2fr 1fr;
+      align-items: center;
+      gap: 32px;
+      padding-block: 132px 84px;
+    }
+  }
+
+  .greet {
+    font-family: var(--font-mono);
+    font-size: clamp(14px, 1.6vw, 17px);
+    color: var(--accent-text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 1.6em;
+  }
+  .greet .prompt {
+    color: var(--faint);
+  }
+  .fullname {
+    margin: 18px 0 12px;
+    font-family: var(--font-mono);
+    font-size: clamp(15px, 1.5vw, 18px);
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+  .fullname b {
+    color: var(--fg);
+    font-weight: 700;
+  }
+  @media (max-width: 520px) {
+    .fullname .fn-role {
+      display: none;
+    }
+  }
+
+  /* <Bonavee /> */
+  .code-name {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(38px, 11vw, 92px);
+    letter-spacing: -0.05em;
+    line-height: 1;
+    margin: 0;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    min-height: 1.1em;
+  }
+  @media (min-width: 960px) {
+    .code-name {
+      font-size: clamp(40px, 7vw, 92px);
+    }
+  }
+  .code-name .tk-p {
+    color: var(--faint);
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 0.72em;
+    letter-spacing: -0.04em;
+  }
+  .code-name .tk-close {
+    margin-left: 0.16em;
+  }
+  .code-name .tk-close:empty {
+    margin-left: 0;
+  }
+  .code-name .y {
+    color: var(--accent);
+    -webkit-text-stroke: var(--vee-stroke);
+    paint-order: stroke fill;
+  }
+  .bigcaret {
+    display: inline-block;
+    width: 0.5em;
+    height: 0.95em;
+    margin-left: 0.06em;
+    background: var(--accent);
+    box-shadow: 0 0 24px -4px var(--accent);
+    animation: blink 1s steps(1) infinite;
+  }
+  .bigcaret.typing {
+    animation: none;
+  }
+
+  .lede {
+    font-size: clamp(17px, 1.8vw, 21px);
+    line-height: 1.5;
+    color: var(--muted);
+    max-width: 34ch;
+    margin: 22px 0 0;
+  }
+  .rot {
+    display: inline-grid;
+    vertical-align: bottom;
+    color: var(--fg);
+    font-weight: 600;
+  }
+  .rot > span {
+    grid-area: 1 / 1;
+    white-space: nowrap;
+    background: linear-gradient(transparent 62%, var(--accent-soft) 62%);
+  }
+  .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 34px;
+  }
+
+  /* right column */
+  .hero-right {
+    display: grid;
+    min-width: 0;
+    justify-items: start;
+  }
+  @media (min-width: 960px) {
+    .hero-right {
+      justify-items: end;
+      position: relative;
+    }
+  }
+
+  /* photo carousel */
+  .portrait {
+    position: relative;
+    margin: 0;
+    width: min(100%, 360px);
+    aspect-ratio: 4 / 5;
+    border-radius: 22px;
+    overflow: hidden;
+    border: 1px solid var(--line-strong);
+    background: linear-gradient(160deg, var(--raise-2), var(--bg-deep));
+    box-shadow: var(--shadow);
+    animation: float-in 1s calc(0.35s + var(--boot)) cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+  .portrait::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent 55%, rgba(23, 41, 35, 0.55));
+  }
+  .slide {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    clip-path: inset(0 0 0 100%);
+  }
+  .slide.on {
+    z-index: 2;
+    clip-path: inset(0 0 0 0);
+  }
+  .slide.in {
+    z-index: 3;
+    animation: slidein 0.9s cubic-bezier(0.75, 0, 0.15, 1) forwards;
+  }
+  .slide img {
+    object-fit: cover;
+  }
+  .slide.in img {
+    animation: zoomin 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .slide.in::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--accent);
+    box-shadow: 0 0 18px 4px var(--accent);
+    animation: edge 0.9s cubic-bezier(0.75, 0, 0.15, 1) forwards;
+  }
+  .portrait .cap {
+    position: absolute;
+    z-index: 4;
+    top: 26px;
+    left: 16px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    color: #f2f1ec;
+    background: rgba(23, 41, 35, 0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    padding: 5px 9px;
+    border-radius: 6px;
+  }
+  .portrait .scan {
+    position: absolute;
+    z-index: 4;
+    left: 0;
+    right: 0;
+    height: 40%;
+    pointer-events: none;
+    background: linear-gradient(
+      transparent,
+      var(--accent-soft) 85%,
+      color-mix(in srgb, var(--accent) 60%, transparent)
+    );
+    border-bottom: 1.5px solid var(--accent);
+    opacity: 0.8;
+    mix-blend-mode: screen;
+    animation: scan 2.4s calc(1s + var(--boot)) cubic-bezier(0.6, 0, 0.4, 1) 2 both;
+  }
+  .portrait .scan.again {
+    animation: scan 1.2s cubic-bezier(0.6, 0, 0.4, 1) 1 both;
+  }
+  .pbars {
+    position: absolute;
+    z-index: 4;
+    top: 12px;
+    left: 40px;
+    right: 40px;
+    display: flex;
+    gap: 5px;
+  }
+  .pbars button {
+    flex: 1;
+    height: 4px;
+    padding: 0;
+    border: 0;
+    border-radius: 3px;
+    background: rgba(242, 241, 236, 0.28);
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+  }
+  .pbars button::before {
+    content: "";
+    position: absolute;
+    inset: -8px 0;
+  }
+  .pbars button i {
+    display: block;
+    height: 100%;
+    background: var(--accent);
+    transform-origin: left;
+    transform: scaleX(0);
+  }
+  .pbars button.done i {
+    transform: scaleX(1);
+  }
+  .pbars button.run i {
+    animation: pfill 5s linear forwards;
+  }
+  .portrait:hover .pbars button.run i,
+  .portrait.paused .pbars button.run i {
+    animation-play-state: paused;
+  }
+  .sbtn {
+    position: absolute;
+    z-index: 4;
+    top: 50%;
+    width: 38px;
+    height: 38px;
+    margin-top: -19px;
+    border-radius: 50%;
+    border: 1px solid rgba(242, 241, 236, 0.3);
+    background: rgba(23, 41, 35, 0.6);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    color: #f2f1ec;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    opacity: 0;
+    transition:
+      opacity 0.25s,
+      transform 0.25s,
+      background 0.2s;
+  }
+  .sbtn svg {
+    width: 18px;
+    height: 18px;
+  }
+  .sbtn.prev {
+    left: 12px;
+    transform: translateX(-8px);
+  }
+  .sbtn.next {
+    right: 12px;
+    transform: translateX(8px);
+  }
+  .portrait:hover .sbtn,
+  .portrait:focus-within .sbtn {
+    opacity: 1;
+    transform: none;
+  }
+  .sbtn:hover {
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-color: transparent;
+  }
+  @media (hover: none) {
+    .sbtn {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .scount {
+    position: absolute;
+    z-index: 4;
+    right: 16px;
+    bottom: 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: #f2f1ec;
+    background: rgba(23, 41, 35, 0.6);
+    padding: 4px 8px;
+    border-radius: 6px;
+    letter-spacing: 0.08em;
+  }
+  .portrait .br {
+    position: absolute;
+    z-index: 4;
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--accent);
+  }
+  .portrait .br.b {
+    top: 10px;
+    right: 10px;
+    border-width: 2px 2px 0 0;
+  }
+  .portrait .br.c {
+    bottom: 10px;
+    left: 10px;
+    border-width: 0 0 2px 2px;
+  }
+  .portrait .br.d {
+    bottom: 10px;
+    right: 10px;
+    border-width: 0 2px 2px 0;
+  }
+
+  /* status.ts card */
+  .console {
+    background: color-mix(in srgb, var(--raise) 88%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--line-strong);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    min-width: 0;
+    animation: float-in 1s calc(0.6s + var(--boot)) cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+  .hero-right .console {
+    position: relative;
+    z-index: 3;
+    margin-top: 14px;
+    width: min(100%, 360px);
+  }
+  @media (min-width: 960px) {
+    .hero-right .console {
+      position: absolute;
+      left: 0;
+      bottom: -48px;
+      width: min(290px, 60%);
+      margin: 0;
+    }
+  }
+  .console-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  .console-bar i {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+  }
+  .console-bar i:nth-child(1) {
+    background: #ff5f57;
+  }
+  .console-bar i:nth-child(2) {
+    background: #febc2e;
+  }
+  .console-bar i:nth-child(3) {
+    background: #28c840;
+  }
+  .console-bar span {
+    margin-left: 8px;
+    color: var(--faint);
+    font-size: 12px;
+  }
+  .console-body {
+    padding: 14px;
+    display: grid;
+    gap: 10px;
+  }
+  .console .row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+  }
+  .console .row .k {
+    color: var(--faint);
+  }
+  .console .row .v {
+    color: var(--fg);
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  .state-big {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px;
+    border-radius: 12px;
+    background: var(--bg-deep);
+    border: 1px solid var(--line);
+  }
+  .state-big .lamp {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background: var(--raise-2);
+    flex: none;
+    transition:
+      background 0.4s,
+      box-shadow 0.4s;
+  }
+  .state-big .lamp b {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--off);
+    transition:
+      background 0.4s,
+      box-shadow 0.4s;
+  }
+  .is-working .state-big .lamp {
+    background: color-mix(in srgb, var(--ok) 16%, transparent);
+  }
+  .is-working .state-big .lamp b {
+    background: var(--ok);
+    box-shadow: 0 0 18px 4px color-mix(in srgb, var(--ok) 60%, transparent);
+    animation: pulse 1.8s infinite;
+  }
+  .state-big strong {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: -0.01em;
+  }
+  .state-big small {
+    color: var(--muted);
+    font-size: 12px;
+  }
+  .beat-v {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .beat {
+    display: block;
+    width: 64px;
+    height: 20px;
+    color: var(--off);
+    transition: color 0.4s;
+  }
+  .is-working .beat {
+    color: var(--ok);
+  }
+  .beat path {
+    stroke-dasharray: 150;
+    stroke-dashoffset: 0;
+  }
+  .is-working .beat path {
+    animation: ecg 2s linear infinite;
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+@keyframes float-in {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+@keyframes slidein {
+  from {
+    clip-path: inset(0 0 0 100%);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+@keyframes edge {
+  from {
+    left: 100%;
+  }
+  to {
+    left: 0;
+    opacity: 0;
+  }
+}
+@keyframes zoomin {
+  from {
+    transform: scale(1.12);
+    filter: saturate(1.6) contrast(1.2) hue-rotate(-20deg);
+  }
+  to {
+    transform: none;
+    filter: none;
+  }
+}
+@keyframes scan {
+  0% {
+    top: -40%;
+  }
+  60%,
+  100% {
+    top: 100%;
+  }
+}
+@keyframes pfill {
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes ecg {
+  from {
+    stroke-dashoffset: 300;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portrait .scan {
+    display: none;
+  }
+}

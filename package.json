@@ -11,6 +11,7 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
+    "fast-xml-parser": "^5.11.2",
     "framer-motion": "^14.6.0",
     "next": "15.5.28",
     "next-themes": "^0.4.6",

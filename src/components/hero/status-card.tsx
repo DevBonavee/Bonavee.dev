@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { shortAgo, useLiveStatus } from "@/components/status/status-provider";
 
 const timeFmt = new Intl.DateTimeFormat("en-GB", {
   hour: "2-digit",
@@ -9,18 +10,31 @@ const timeFmt = new Intl.DateTimeFormat("en-GB", {
   hour12: false,
 });
 
-// The status.ts editor window. Static "online" for now; phase 5 feeds it from /api/status.
-export function StatusCard({ online = true }: { online?: boolean }) {
-  const [now, setNow] = useState<Date | null>(null);
-  const [mountedAt] = useState(() => Date.now());
+// The status.ts editor window: live "Working" lamp from the laptop heartbeat, plus the visitor's clock.
+export function StatusCard() {
+  const status = useLiveStatus();
+  const [now, setNow] = useState<number | null>(null);
 
   useEffect(() => {
-    setNow(new Date());
-    const id = setInterval(() => setNow(new Date()), 1000);
+    setNow(Date.now());
+    const id = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(id);
   }, []);
 
-  const age = now ? Math.max(0, Math.floor((now.getTime() - mountedAt) / 1000) % 60) : 0;
+  const online = status?.online ?? false;
+  const since = status?.lastSeen && now ? now - status.lastSeen : null;
+
+  let title = "Checking…";
+  let sub = "Looking for a heartbeat";
+  if (status) {
+    title = online ? "Working" : "Not working";
+    if (online) sub = status.vscode ? "Laptop online · coding in VS Code" : "Laptop online";
+    else sub = since !== null ? `Laptop offline · no heartbeat for ${shortAgo(since)}` : "Laptop offline";
+  }
+
+  let beat = "--";
+  if (since !== null) beat = since < 2000 ? "just now" : `${shortAgo(since)} ago`;
+  else if (status) beat = "none yet";
 
   return (
     <aside className={online ? "console is-working" : "console"} aria-label="Live status">
@@ -36,15 +50,13 @@ export function StatusCard({ online = true }: { online?: boolean }) {
             <b />
           </span>
           <div>
-            <strong>{online ? "Working" : "Not working"}</strong>
-            <small>{online ? "Laptop online · coding in VS Code" : "Laptop offline · no heartbeat"}</small>
+            <strong>{title}</strong>
+            <small>{sub}</small>
           </div>
         </div>
         <div className="row">
           <span className="k">Local time</span>
-          <span className="v" suppressHydrationWarning>
-            {now ? timeFmt.format(now) : "--:--:--"}
-          </span>
+          <span className="v">{now ? timeFmt.format(now) : "--:--:--"}</span>
         </div>
         <div className="row">
           <span className="k">Heartbeat</span>
@@ -61,7 +73,7 @@ export function StatusCard({ online = true }: { online?: boolean }) {
             >
               <path d="M0 17h30l6-12 8 26 7-20 5 6h64" />
             </svg>
-            <span>{age < 2 ? "just now" : `${age}s ago`}</span>
+            <span>{beat}</span>
           </span>
         </div>
       </div>

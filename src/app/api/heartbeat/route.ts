@@ -14,7 +14,7 @@ function secretMatches(header: string | null, secret: string) {
 const json = (body: unknown, status: number) =>
   Response.json(body, { status, headers: { "Cache-Control": "no-store" } });
 
-// POST /api/heartbeat  (Authorization: Bearer $HEARTBEAT_SECRET)  body: { source, vscode }
+// POST /api/heartbeat  (Authorization: Bearer $HEARTBEAT_SECRET)  body: { source }
 export async function POST(req: Request) {
   const secret = process.env.HEARTBEAT_SECRET;
   const redis = getRedis();
@@ -27,11 +27,10 @@ export async function POST(req: Request) {
   } catch {
     body = {};
   }
-  const b = (body ?? {}) as { source?: unknown; vscode?: unknown };
+  const b = (body ?? {}) as { source?: unknown };
   const status: StoredStatus = {
     lastSeen: Date.now(),
     source: typeof b.source === "string" ? b.source.slice(0, 40) : "unknown",
-    vscode: b.vscode === true,
   };
 
   try {

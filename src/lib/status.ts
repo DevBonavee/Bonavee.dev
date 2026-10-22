@@ -4,8 +4,9 @@ import { Redis } from "@upstash/redis";
 export const STATUS_KEY = "status";
 export const ONLINE_WINDOW_MS = 3 * 60_000;
 
-export type StoredStatus = { lastSeen: number; source: string; vscode: boolean };
-export type PublicStatus = { online: boolean; lastSeen: number | null; vscode: boolean };
+// "Working" means the laptop is awake and online: a heartbeat arrived in the last 3 minutes.
+export type StoredStatus = { lastSeen: number; source: string };
+export type PublicStatus = { online: boolean; lastSeen: number | null };
 
 // Upstash from the Vercel Marketplace may expose either naming scheme.
 export function getRedis(): Redis | null {
@@ -16,6 +17,6 @@ export function getRedis(): Redis | null {
 }
 
 export function toPublic(s: StoredStatus | null, now = Date.now()): PublicStatus {
-  if (!s || typeof s.lastSeen !== "number") return { online: false, lastSeen: null, vscode: false };
-  return { online: now - s.lastSeen < ONLINE_WINDOW_MS, lastSeen: s.lastSeen, vscode: Boolean(s.vscode) };
+  if (!s || typeof s.lastSeen !== "number") return { online: false, lastSeen: null };
+  return { online: now - s.lastSeen < ONLINE_WINDOW_MS, lastSeen: s.lastSeen };
 }

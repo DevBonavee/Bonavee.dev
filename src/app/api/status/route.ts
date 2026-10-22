@@ -2,7 +2,7 @@ import { getRedis, STATUS_KEY, toPublic, type StoredStatus } from "@/lib/status"
 
 export const dynamic = "force-dynamic";
 
-// GET /api/status -> { online, lastSeen, vscode }. Reports offline when Redis is missing or unreachable.
+// GET /api/status -> { online, lastSeen }. Reports offline when Redis is missing or unreachable.
 export async function GET() {
   const redis = getRedis();
   let stored: StoredStatus | null = null;

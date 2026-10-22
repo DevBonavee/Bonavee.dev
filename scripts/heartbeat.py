@@ -1,7 +1,7 @@
-# Sends "I'm online" to bonavee.dev every 60s while this computer is on and connected.
+# Sends "I'm online" to bonavee.dev every 60s while this computer is awake and connected.
 # Standard library only. Reads HEARTBEAT_SECRET (and optionally HEARTBEAT_URL) from the
 # environment, or from a .env file next to this script or in the current folder.
-import json, os, time, urllib.request, subprocess, platform
+import json, os, time, urllib.request
 from pathlib import Path
 
 
@@ -22,25 +22,25 @@ load_dotenv()
 
 URL = os.environ.get("HEARTBEAT_URL", "https://bonavee.dev/api/heartbeat")
 SECRET = os.environ["HEARTBEAT_SECRET"]
+EVERY = 60  # seconds between heartbeats
+RETRY = 15  # seconds before retrying after a failed send (no internet yet, site down)
 
-def vscode_running() -> bool:
-    try:
-        if platform.system() == "Windows":
-            # CREATE_NO_WINDOW stops a console flashing up every minute under pythonw.exe.
-            out = subprocess.run(["tasklist"], capture_output=True, text=True,
-                                 creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0)).stdout
-            return "Code.exe" in out
-        out = subprocess.run(["pgrep", "-f", "Visual Studio Code|/code"], capture_output=True, text=True).stdout
-        return bool(out.strip())
-    except Exception:
-        return False
 
-while True:
+def send() -> bool:
     try:
-        body = json.dumps({"source": "laptop", "vscode": vscode_running()}).encode()
+        body = json.dumps({"source": "laptop"}).encode()
         req = urllib.request.Request(URL, data=body, method="POST", headers={
             "Content-Type": "application/json", "Authorization": f"Bearer {SECRET}"})
         urllib.request.urlopen(req, timeout=10)
+        return True
     except Exception:
-        pass  # offline or site down: try again next minute
-    time.sleep(60)
+        return False
+
+
+# Wake every 5s and compare against the wall clock, so a heartbeat goes out within seconds
+# of opening the laptop (sleep pauses the timer) or getting back online.
+next_at = 0.0
+while True:
+    if time.time() >= next_at:
+        next_at = time.time() + (EVERY if send() else RETRY)
+    time.sleep(5)

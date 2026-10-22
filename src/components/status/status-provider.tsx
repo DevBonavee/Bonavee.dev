@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 
-export type LiveStatus = { online: boolean; lastSeen: number | null; vscode: boolean };
+export type LiveStatus = { online: boolean; lastSeen: number | null };
 
 const POLL_MS = 30_000;
 const StatusContext = createContext<LiveStatus | null>(null);

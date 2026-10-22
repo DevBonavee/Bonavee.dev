@@ -10,7 +10,7 @@ const timeFmt = new Intl.DateTimeFormat("en-GB", {
   hour12: false,
 });
 
-// The status.ts editor window: live "Working" lamp from the laptop heartbeat, plus the visitor's clock.
+// The status.ts editor window: "Working" while the laptop is awake and online, plus the visitor's clock.
 export function StatusCard() {
   const status = useLiveStatus();
   const [now, setNow] = useState<number | null>(null);
@@ -28,7 +28,7 @@ export function StatusCard() {
   let sub = "Looking for a heartbeat";
   if (status) {
     title = online ? "Working" : "Not working";
-    if (online) sub = status.vscode ? "Laptop online · coding in VS Code" : "Laptop online";
+    if (online) sub = "Laptop online";
     else sub = since !== null ? `Laptop offline · no heartbeat for ${shortAgo(since)}` : "Laptop offline";
   }
 

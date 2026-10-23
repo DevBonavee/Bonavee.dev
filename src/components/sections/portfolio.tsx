@@ -1,7 +1,6 @@
 import { Reveal } from "@/components/motion/reveal";
 import Image from "next/image";
-import { projects } from "@content/projects";
-import { publicFileExists } from "@/lib/public-file";
+import { getPortfolio } from "@/lib/portfolio";
 import { SampleTag, SecHead } from "./sec-head";
 
 // Drawn stand-ins for a missing screenshot, cycling through three looks.
@@ -39,7 +38,8 @@ function Placeholder({ variant }: { variant: number }) {
   );
 }
 
-export function Portfolio() {
+export async function Portfolio() {
+  const projects = await getPortfolio();
   const anySample = projects.some((p) => p.sample);
 
   return (
@@ -63,7 +63,7 @@ export function Portfolio() {
 
         <div className="projects">
           {projects.map((p, i) => (
-            <Reveal key={p.title} i={i}>
+            <Reveal key={p.source ?? p.title} i={i}>
               <article className="card proj tilt">
                 <div className="shot">
                   <div className="win">
@@ -72,12 +72,13 @@ export function Portfolio() {
                       <i />
                       <i />
                     </div>
-                    {publicFileExists(p.image) ? (
+                    {p.image ? (
                       <div className="screen">
                         <Image
                           src={p.image}
                           alt={`Screenshot of ${p.title}`}
                           fill
+                          unoptimized={p.remote}
                           sizes="(min-width: 1180px) 360px, (min-width: 720px) 50vw, 100vw"
                         />
                       </div>

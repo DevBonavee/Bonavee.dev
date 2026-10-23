@@ -1,9 +1,9 @@
 import "server-only";
 import { site } from "@content/site";
 
-const USER = site.github;
+export const USER = site.github;
 const API = "https://api.github.com";
-const REVALIDATE = 3600;
+export const REVALIDATE = 3600;
 
 export type Repo = {
   name: string;
@@ -44,7 +44,7 @@ function headers(): HeadersInit {
   };
 }
 
-async function get<T>(path: string): Promise<T | null> {
+export async function get<T>(path: string): Promise<T | null> {
   try {
     const res = await fetch(`${API}${path}`, {
       headers: headers(),

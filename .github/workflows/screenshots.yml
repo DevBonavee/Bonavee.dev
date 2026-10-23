@@ -1,0 +1,43 @@
+# Daily: screenshot every live portfolio site and commit any changed images.
+# The push triggers a Vercel redeploy, so the portfolio cards stay current with no manual work.
+name: Portfolio screenshots
+
+on:
+  schedule:
+    - cron: "0 5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  shoot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Playwright
+        run: |
+          mkdir -p /tmp/shot && cd /tmp/shot
+          npm init -y > /dev/null
+          npm i playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Take screenshots
+        env:
+          NODE_PATH: /tmp/shot/node_modules
+          SITE_URL: ${{ vars.SITE_URL || 'https://bonavee.dev' }}
+        run: node scripts/screenshots.cjs
+
+      - name: Commit changes
+        run: |
+          git add public/projects
+          if git diff --cached --quiet; then echo "No changes"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Update portfolio screenshots"
+          git push

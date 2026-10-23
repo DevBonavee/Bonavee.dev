@@ -3,12 +3,15 @@ import { projects as manual, type Project } from "@content/projects";
 import { get, REVALIDATE, USER } from "./github";
 import { publicFileExists } from "./public-file";
 
-// Portfolio cards = GitHub repos tagged "portfolio" (newest first) + manual entries from content/projects.ts.
+// Portfolio cards = every GitHub repo with a working live site (newest first) + manual entries
+// from content/projects.ts. Nothing to tag: a repo shows up once it has a live URL.
+// Topic "portfolio" forces a repo in even without a site; topic "no-portfolio" hides it.
 // Live URL per repo: the repo's "Website" field, else its latest production deployment
-// (Vercel, or Render with GitHub deployments on), else GitHub Pages.
-// Screenshot: public/projects/<repo-name>.png, else the live site's og:image, else a drawn placeholder.
+// (Vercel, or Render with GitHub deployments on), else GitHub Pages. Dead links are dropped.
+// Screenshot: public/projects/<repo-name>.png (refreshed daily by .github/workflows/screenshots.yml),
+// else the live site's og:image, else a drawn placeholder.
 
-export type PortfolioProject = Omit<Project, "image"> & { image?: string; remote?: boolean };
+export type PortfolioProject = Omit<Project, "image"> & { image?: string; remote?: boolean; slug?: string };
 
 type RawRepo = {
   name: string;
@@ -42,11 +45,34 @@ async function deploymentUrl(repo: string): Promise<string | undefined> {
   return undefined;
 }
 
+// False only for a clear "not there / locked" answer. Timeouts count as alive:
+// free hosts like Render sleep and take a while to wake up.
+async function isAlive(url: string): Promise<boolean> {
+  try {
+    const res = await fetch(url, {
+      redirect: "follow",
+      next: { revalidate: REVALIDATE },
+      signal: AbortSignal.timeout(6000),
+    });
+    if ([401, 403, 404, 410].includes(res.status)) return false;
+    // Vercel deployment protection redirects to its login page.
+    return !/vercel\.com\/(login|sso)/.test(res.url);
+  } catch {
+    return true;
+  }
+}
+
 async function liveUrl(r: RawRepo): Promise<string | undefined> {
-  if (isHttp(r.homepage)) return r.homepage;
-  const dep = await deploymentUrl(r.name);
-  if (dep) return dep;
-  if (r.has_pages) return `https://${USER.toLowerCase()}.github.io/${r.name}/`;
+  const candidates: (() => Promise<string | undefined>)[] = [
+    async () => (isHttp(r.homepage) ? r.homepage : undefined),
+    // Deployment lookups cost API calls; without a token the hourly limit is only 60.
+    async () => (process.env.GITHUB_TOKEN ? deploymentUrl(r.name) : undefined),
+    async () => (r.has_pages ? `https://${USER.toLowerCase()}.github.io/${r.name}/` : undefined),
+  ];
+  for (const next of candidates) {
+    const url = await next();
+    if (url && (await isAlive(url))) return url;
+  }
   return undefined;
 }
 
@@ -77,12 +103,14 @@ async function fromGitHub(): Promise<PortfolioProject[]> {
   const raw = await get<RawRepo[]>(`/users/${USER}/repos?per_page=100&sort=updated`);
   if (!Array.isArray(raw)) return [];
   const repos = raw
-    .filter((r) => r.topics?.includes("portfolio") && !r.archived)
+    .filter((r) => !r.fork && !r.archived && !r.topics?.includes("no-portfolio"))
+    .filter((r) => r.name.toLowerCase() !== USER.toLowerCase()) // profile README repo
     .sort((a, b) => b.created_at.localeCompare(a.created_at));
 
-  return Promise.all(
+  const cards = await Promise.all(
     repos.map(async (r) => {
       const demo = await liveUrl(r);
+      if (!demo && !r.topics?.includes("portfolio")) return null;
       const local = ["png", "jpg", "jpeg", "webp"]
         .map((ext) => `/projects/${r.name}.${ext}`)
         .find((p) => publicFileExists(p));
@@ -91,6 +119,7 @@ async function fromGitHub(): Promise<PortfolioProject[]> {
         .filter((t): t is string => !!t)
         .slice(0, 4);
       return {
+        slug: r.name,
         title: titleCase(r.name),
         description: r.description ?? "",
         image: local ?? og,
@@ -98,9 +127,10 @@ async function fromGitHub(): Promise<PortfolioProject[]> {
         tags,
         demo,
         source: r.html_url,
-      };
+      } satisfies PortfolioProject;
     }),
   );
+  return cards.filter((c) => c !== null);
 }
 
 export async function getPortfolio(): Promise<PortfolioProject[]> {

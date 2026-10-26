@@ -4,6 +4,17 @@ The personal site of Chukwuebuka Bonaventure Nnamah (Bonavee). Next.js 15 with t
 
 `CLAUDE.md` is the original build brief and `design/mockup.html` is the approved design. This file covers the day-to-day: running it, editing content, and the settings it needs.
 
+## Pages
+
+| Page                | What's on it                                                                                                                                                              |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/`                 | The homepage: hero, "Looking to hire?", currently building, GitHub, stack, reading, the latest 3 posts, résumé and contact.                                               |
+| `/portfolio`        | The page for clients (labelled "projects" in the nav): your live projects, quotes and Google reviews, services and prices, how a project runs, about, and a booking card. |
+| `/portfolio/<slug>` | One page per case study in `content/case-studies/`. None exist yet, so the case-study section stays hidden.                                                               |
+| `/now`              | Currently building, GitHub activity and this month's books.                                                                                                               |
+| `/writing`          | Your Medium posts.                                                                                                                                                        |
+| `/resume`           | The CV tabs, PDF downloads and the timeline.                                                                                                                              |
+
 ## Run it locally
 
 You need Node.js 20 or newer.
@@ -29,22 +40,27 @@ If `npm run build` ever fails inside webpack with `WasmHash ... reading 'length'
 
 Everything a visitor reads lives in `content/`, and images live in `public/`. You never need to touch `src/` to update the site.
 
-| To change                    | Edit                                       | Notes                                                                                                              |
-| ---------------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
-| Name, email, social links    | `content/site.ts`                          | The booking link comes from `NEXT_PUBLIC_BOOKING_URL`.                                                             |
-| Hero photos                  | `public/hero/`                             | Drop in `01.jpg`, `02.jpg`, … They show in file-name order. With two or more, the progress bars and arrows appear. |
-| Hero photo captions          | `content/hero.ts`                          | Optional. A photo with no caption shows "BONAVEE // PHOTO NN".                                                     |
-| Currently building           | `content/now.ts`                           | `progress` is 0–100. In notes, wrap code in backticks: `` `Route` ``.                                              |
-| Portfolio                    | `content/projects.ts` + `public/projects/` | Screenshots at 16:10 look best. Until the file exists the card draws a placeholder.                                |
-| Books                        | `content/books.ts` + `public/books/`       | Set `month` to `"YYYY-MM"`. The site shows this month's books, or the most recent month that has some.             |
-| Résumé PDFs and tabs         | `content/cvs.ts` + `public/cv/`            | One entry per tab. The first one is also the hero's "Download résumé" button.                                      |
-| Experience, education, facts | `content/resume.ts`                        |                                                                                                                    |
+| To change                                                     | Edit                                       | Notes                                                                                                              |
+| ------------------------------------------------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| Name, email, social links                                     | `content/site.ts`                          | The booking link comes from `NEXT_PUBLIC_BOOKING_URL`.                                                             |
+| Hero photos                                                   | `public/hero/`                             | Drop in `01.jpg`, `02.jpg`, … They show in file-name order. With two or more, the progress bars and arrows appear. |
+| Hero photo captions                                           | `content/hero.ts`                          | Optional. A photo with no caption shows "BONAVEE // PHOTO NN".                                                     |
+| Currently building                                            | `content/now.ts`                           | `progress` is 0–100. In notes, wrap code in backticks: `` `Route` ``.                                              |
+| Projects on /portfolio                                        | Automatic, from GitHub                     | Every public repo with a working live site. See "GitHub and Medium update themselves" below.                       |
+| Extra project cards                                           | `content/projects.ts` + `public/projects/` | For work that isn't on GitHub. Screenshots at 16:10 look best.                                                     |
+| Case studies, services, quotes, about, the /portfolio numbers | `content/`                                 | Step-by-step instructions are in [`content/README.md`](content/README.md).                                         |
+| Books                                                         | `content/books.ts` + `public/books/`       | Set `month` to `"YYYY-MM"`. The site shows this month's books, or the most recent month that has some.             |
+| Résumé PDFs and tabs                                          | `content/cvs.ts` + `public/cv/`            | One entry per tab. The first one is also the hero's "Download résumé" button.                                      |
+| Experience, education, facts                                  | `content/resume.ts`                        |                                                                                                                    |
 
-Entries copied from the mockup have `sample: true`, which shows a dashed "sample" tag on the page. Delete that line when you replace the entry with real content.
+Entries copied from the mockup have `sample: true`, which shows a dashed "sample" tag on the page. Delete that line when you replace the entry with real content. Right now that covers the quotes, the service prices, the /portfolio numbers, the books and the "Currently building" card.
+
+Every file in `content/` is checked when the site builds. A typo, such as a missing field or a month written "Oct 2026", stops the build with a message naming the file and the field. The live site keeps running the previous version until you fix it.
 
 GitHub and Medium update themselves:
 
-- **GitHub repo cards**: add the topic `portfolio` to any public repo (repo page > About > gear icon > Topics). It shows up within an hour.
+- **Projects on /portfolio**: any public repo with a working live site shows up within an hour. The site finds the address in the repo's "Website" field, its latest Vercel deployment, or GitHub Pages. Add the topic `no-portfolio` to hide a repo, or `portfolio` to show one that has no site (repo page > About > gear icon > Topics). A screenshot is taken daily by `.github/workflows/screenshots.yml`.
+- **GitHub repo cards** on the homepage and /now: repos with the `portfolio` topic.
 - **Medium**: new posts on bonavee120.medium.com show up within an hour.
 
 The page rebuilds itself at most once an hour, so content edits that you deploy show up straight away, but live data can lag by up to an hour.
@@ -59,13 +75,18 @@ Put these in `.env.local` for local work and in Vercel under Project > Settings 
 | `HEARTBEAT_SECRET`                                   | The Working / Not working status          | Any long random string. `python -c "import secrets; print(secrets.token_urlsafe(48))"` makes one. Use the same value in `scripts/.env` on your laptop.                                          |
 | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` | Storing the heartbeat                     | Vercel > Storage (Marketplace) > Upstash for Redis > connect it to the project. If Vercel names them `KV_REST_API_URL` and `KV_REST_API_TOKEN` instead, that works too.                         |
 | `NEXT_PUBLIC_BOOKING_URL`                            | "Book a call"                             | Google Calendar > Create > Appointment schedule > open the booking page > copy its link. If unset, the button opens an email to you.                                                            |
-| `NEXT_PUBLIC_SITE_URL`                               | Canonical links, sitemap, social previews | `https://bonavee.dev`                                                                                                                                                                           |
+| `NEXT_PUBLIC_SITE_URL`                               | Canonical links, sitemap, social previews | The address people use. `bonavee.dev` isn't registered yet, so set this to `https://bonavee-dev.vercel.app` until it is, then change it to `https://bonavee.dev`.                               |
+| `GOOGLE_PLACES_API_KEY`                              | Google reviews on /portfolio              | Google Cloud console > APIs & Services > Credentials. Enable "Places API (New)" and restrict the key to it. It is only ever used on the server.                                                 |
+| `GOOGLE_PLACE_ID`                                    | Google reviews on /portfolio              | Create your Google Business Profile, then look the business up in Google's Place ID Finder.                                                                                                     |
+| `NEXT_PUBLIC_GOOGLE_REVIEW_URL`                      | The "Leave a review" button               | Business Profile > "Ask for reviews" > copy the link.                                                                                                                                           |
+
+Until the three Google values are set, the reviews block doesn't appear at all. Everything else on the page works without them.
 
 ## The Working / Not working light
 
 A small Python script on your laptop tells the site you're online once a minute. The site shows **Working** while a heartbeat has arrived in the last 3 minutes. Close the lid or lose internet and it flips to **Not working** about 3 minutes later.
 
-Setup, including starting it automatically when you log in on Windows, macOS or Linux, is in [`scripts/README.md`](scripts/README.md).
+Setup, including starting it automatically when you log in on Windows, macOS or Linux, is in [`scripts/README.md`](scripts/README.md). The script sends to `bonavee-dev.vercel.app`, which keeps working after you add a custom domain.
 
 ## Deploying
 
@@ -74,7 +95,8 @@ The site is meant for Vercel:
 1. Push this repo to GitHub.
 2. In Vercel, import the repo. The defaults (Next.js, `npm run build`) are right.
 3. Add the environment variables above, including the Upstash store.
-4. Deploy, then add `bonavee.dev` under Project > Settings > Domains and follow the DNS instructions.
+4. Deploy. The site is live at `bonavee-dev.vercel.app`.
+5. To use `bonavee.dev`, buy the domain first (it isn't registered yet), add it under Project > Settings > Domains, follow the DNS instructions, and change `NEXT_PUBLIC_SITE_URL` to `https://bonavee.dev`.
 
 After that, every push to `main` deploys to production.
 
@@ -83,12 +105,13 @@ Check the result on [PageSpeed Insights](https://pagespeed.web.dev/) once it's l
 ## Where things are
 
 ```
-content/              everything you edit
+content/              everything you edit (content/README.md explains each file)
+content/case-studies/ one .mdx file per case study
 public/               hero photos, project screenshots, book covers, CV PDFs
 scripts/              heartbeat.py and its setup guide
 src/app/              page, layout, API routes, icons, OG image, sitemap, robots
-src/components/       hero, sections, live data, motion, nav
-src/lib/              GitHub, Medium, heartbeat and hero-photo loaders
+src/components/       hero, sections, /portfolio pieces, live data, motion, nav
+src/lib/              GitHub, Medium, Google reviews, heartbeat and hero-photo loaders; content checks
 src/assets/fonts/     TTFs used only to draw the favicon and social preview image
 design/mockup.html    the approved design
 ```

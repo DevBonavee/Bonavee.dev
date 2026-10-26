@@ -1,6 +1,6 @@
 # Heartbeat script
 
-`heartbeat.py` tells bonavee.dev that your laptop is open and online. While the laptop is awake and connected, it sends a `POST` to `/api/heartbeat` with your secret every 60 seconds. The site shows **Working** while a heartbeat has arrived in the last 3 minutes, and **Not working** otherwise.
+`heartbeat.py` tells the site that your laptop is open and online. While the laptop is awake and connected, it sends a `POST` to `/api/heartbeat` with your secret every 60 seconds. The site shows **Working** while a heartbeat has arrived in the last 3 minutes, and **Not working** otherwise.
 
 In practice:
 
@@ -15,7 +15,8 @@ Create `scripts/.env` (it is git-ignored) with the same value you set as `HEARTB
 
 ```
 HEARTBEAT_SECRET=your-long-random-string
-# Optional: point at a local dev server instead of the live site
+# Optional. The default is https://bonavee-dev.vercel.app/api/heartbeat, which keeps
+# working after you add a custom domain. For a local dev server use:
 # HEARTBEAT_URL=http://localhost:3000/api/heartbeat
 ```
 
@@ -105,6 +106,6 @@ Check it with `systemctl --user status bonavee-heartbeat` and stop it with `syst
 ## Troubleshooting
 
 - **Always "Not working"**: run the script in a terminal with `python scripts/heartbeat.py`. If `HEARTBEAT_SECRET` is missing you'll see a `KeyError`. A wrong secret gets a 401 from the site; the script ignores errors and retries, so test the secret with:
-  `curl -i -X POST https://bonavee.dev/api/heartbeat -H "Authorization: Bearer YOUR_SECRET" -H "Content-Type: application/json" -d "{\"source\":\"laptop\"}"`
+  `curl -i -X POST https://bonavee-dev.vercel.app/api/heartbeat -H "Authorization: Bearer YOUR_SECRET" -H "Content-Type: application/json" -d "{\"source\":\"laptop\"}"`
 - **503 from the site**: `HEARTBEAT_SECRET` or the Upstash variables aren't set in Vercel.
 - **Stays "Working" after closing the lid**: your laptop may be set to stay awake with the lid closed. Check the lid-close action in your power settings.

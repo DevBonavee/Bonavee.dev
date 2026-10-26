@@ -1,4 +1,4 @@
-# Sends "I'm online" to bonavee.dev every 60s while this computer is awake and connected.
+# Sends "I'm online" to the site every 60s while this computer is awake and connected.
 # Standard library only. Reads HEARTBEAT_SECRET (and optionally HEARTBEAT_URL) from the
 # environment, or from a .env file next to this script or in the current folder.
 import json, os, time, urllib.request
@@ -20,7 +20,8 @@ def load_dotenv() -> None:
 
 load_dotenv()
 
-URL = os.environ.get("HEARTBEAT_URL", "https://bonavee.dev/api/heartbeat")
+# The vercel.app address keeps working after a custom domain is added, so it is a safe default.
+URL = os.environ.get("HEARTBEAT_URL", "https://bonavee-dev.vercel.app/api/heartbeat")
 SECRET = os.environ["HEARTBEAT_SECRET"]
 EVERY = 60  # seconds between heartbeats
 RETRY = 15  # seconds before retrying after a failed send (no internet yet, site down)

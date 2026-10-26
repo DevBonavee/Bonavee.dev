@@ -637,45 +637,69 @@
   }
 }
 
-/* Phones and tablets: big display headings step down so they don't crowd small screens.
-   Placed last so these win over the per-section sizes in hero/sections/portfolio.css. */
+/* Heading sizes, kept moderate at every width. Placed last so these win over the per-section
+   sizes in hero/sections/portfolio.css. Desktop first, then tablets and phones step down. */
 @layer components {
+  .hero .code-name {
+    font-size: clamp(40px, 5.2vw, 76px);
+  }
+  .phero-h {
+    font-size: clamp(32px, 3.6vw, 52px);
+  }
+  .page-head h1 {
+    font-size: clamp(34px, 3.8vw, 56px);
+  }
+  .cs-head h1 {
+    font-size: clamp(32px, 3.6vw, 52px);
+  }
+  .sec-head h2 {
+    font-size: clamp(28px, 3vw, 44px);
+  }
+  .mega {
+    font-size: clamp(40px, 4.4vw, 64px);
+  }
+  .card.pcta-card h2 {
+    font-size: clamp(28px, 2.9vw, 42px);
+  }
+  .hire-card h2 {
+    font-size: clamp(26px, 2.6vw, 38px);
+  }
   @media (max-width: 1023px) {
-    .code-name {
-      font-size: clamp(36px, 8vw, 64px);
+    .hero .code-name {
+      font-size: clamp(36px, 7vw, 56px);
     }
     .phero-h {
-      font-size: clamp(30px, 5vw, 46px);
+      font-size: clamp(30px, 4.4vw, 40px);
     }
     .page-head h1 {
-      font-size: clamp(32px, 5.4vw, 52px);
+      font-size: clamp(32px, 4.6vw, 44px);
     }
     .cs-head h1 {
-      font-size: clamp(32px, 5vw, 50px);
+      font-size: clamp(32px, 4.4vw, 42px);
     }
     .sec-head h2 {
-      font-size: clamp(28px, 4.6vw, 44px);
+      font-size: clamp(26px, 3.8vw, 34px);
     }
     .mega {
-      font-size: clamp(38px, 6vw, 50px);
+      font-size: clamp(36px, 5.4vw, 48px);
     }
   }
   @media (max-width: 599px) {
-    .code-name {
-      font-size: clamp(32px, 9vw, 38px);
+    .hero .code-name {
+      font-size: clamp(32px, 9vw, 36px);
     }
     .phero-h {
-      font-size: clamp(28px, 7.6vw, 32px);
+      font-size: clamp(26px, 7vw, 30px);
     }
     .page-head h1,
     .cs-head h1 {
-      font-size: clamp(30px, 8vw, 34px);
+      font-size: clamp(28px, 7.6vw, 32px);
     }
     .sec-head h2 {
-      font-size: clamp(26px, 7vw, 30px);
+      font-size: clamp(24px, 6.4vw, 28px);
     }
     .mega {
-      font-size: clamp(36px, 10vw, 42px);
+      font-size: clamp(34px, 9.4vw, 40px);
     }
   }
 }

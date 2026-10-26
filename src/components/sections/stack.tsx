@@ -1,9 +1,11 @@
+import { Container } from "@/components/container";
 import { Fragment } from "react";
 import { Reveal } from "@/components/motion/reveal";
 import { SecHead } from "./sec-head";
 
 const FRONTEND = ["HTML", "CSS", "Tailwind", "JavaScript", "TypeScript", "React", "Next.js"];
 const BACKEND = ["Python", "FastAPI", "SQLModel", "Alembic"];
+const AUTOMATION = ["n8n", "Zapier", "OpenAI", "Claude", "Webhooks"];
 const FLOW = [
   { name: "Browser", note: 'user clicks "Plan route"' },
   { name: "Next.js", note: "React · TS · Tailwind", hot: true },
@@ -31,7 +33,7 @@ function TechCard({ title, items }: { title: string; items: string[] }) {
 export function Stack() {
   return (
     <section className="block" id="stack">
-      <div className="wrap">
+      <Container>
         <SecHead
           path={
             <>
@@ -54,7 +56,10 @@ export function Stack() {
           <Reveal i={1}>
             <TechCard title="Backend" items={BACKEND} />
           </Reveal>
-          <Reveal i={2} className="col-span-full">
+          <Reveal i={2}>
+            <TechCard title="AI & automation" items={AUTOMATION} />
+          </Reveal>
+          <Reveal i={3} className="col-span-full">
             <div className="card pipeline">
               <h3>How a request flows</h3>
               <ol className="pipe">
@@ -75,7 +80,7 @@ export function Stack() {
             </div>
           </Reveal>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

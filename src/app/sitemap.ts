@@ -2,5 +2,10 @@ import type { MetadataRoute } from "next";
 import { site } from "@content/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [{ url: site.url, lastModified: new Date(), changeFrequency: "weekly", priority: 1 }];
+  const now = new Date();
+  return [
+    { url: site.url, lastModified: now, changeFrequency: "weekly", priority: 1 },
+    { url: `${site.url}/portfolio`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${site.url}/writing`, lastModified: now, changeFrequency: "weekly", priority: 0.6 },
+  ];
 }

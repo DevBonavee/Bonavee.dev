@@ -1,3 +1,5 @@
+import { Container } from "@/components/container";
+import Link from "next/link";
 import { Reveal } from "@/components/motion/reveal";
 import { site } from "@content/site";
 import { getPosts } from "@/lib/medium";
@@ -16,12 +18,14 @@ function postDate(iso: string) {
   });
 }
 
-export async function WritingSection() {
-  const posts = await getPosts();
+// `limit` trims the list on the homepage, which then links to /writing for the rest.
+export async function WritingSection({ limit }: { limit?: number }) {
+  const all = await getPosts();
+  const posts = limit && all ? all.slice(0, limit) : all;
 
   return (
     <section className="block" id="writing">
-      <div className="wrap">
+      <Container>
         <SecHead
           path={
             <>
@@ -30,7 +34,7 @@ export async function WritingSection() {
           }
           title={
             <>
-              Notes from <em>the build</em>
+              My <em>writing</em>
             </>
           }
         >
@@ -64,7 +68,13 @@ export async function WritingSection() {
               </Reveal>
             ))}
           </ul>
-        ) : (
+        ) : null}
+        {posts?.length && limit ? (
+          <p className="all-posts">
+            <Link href="/writing">All posts →</Link>
+          </p>
+        ) : null}
+        {posts?.length ? null : (
           <div className="card unavailable" role="status">
             <span>{posts ? "No posts yet." : "Medium is unavailable right now."}</span>
             <a href={MEDIUM} target="_blank" rel="noopener noreferrer">
@@ -72,7 +82,7 @@ export async function WritingSection() {
             </a>
           </div>
         )}
-      </div>
+      </Container>
     </section>
   );
 }

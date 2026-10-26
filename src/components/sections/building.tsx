@@ -1,3 +1,4 @@
+import { Container } from "@/components/container";
 import { Reveal } from "@/components/motion/reveal";
 import { now } from "@content/now";
 import { InlineCode, SampleTag, SecHead } from "./sec-head";
@@ -7,7 +8,7 @@ export function Building() {
 
   return (
     <section className="block" id="building">
-      <div className="wrap">
+      <Container>
         <SecHead
           path={
             <>
@@ -102,7 +103,7 @@ export function Building() {
             </article>
           </Reveal>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

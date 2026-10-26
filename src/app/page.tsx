@@ -4,8 +4,8 @@ import { GitHubSection } from "@/components/live/github-section";
 import { WritingSection } from "@/components/live/writing-section";
 import { Building } from "@/components/sections/building";
 import { Contact } from "@/components/sections/contact";
+import { Hire } from "@/components/sections/hire";
 import { Marquee } from "@/components/sections/marquee";
-import { Portfolio } from "@/components/sections/portfolio";
 import { Reading } from "@/components/sections/reading";
 import { Resume } from "@/components/sections/resume";
 import { Stack } from "@/components/sections/stack";
@@ -24,7 +24,17 @@ const personLd = {
   url: site.url,
   email: `mailto:${site.email}`,
   sameAs: Object.values(site.socials),
-  knowsAbout: ["Next.js", "TypeScript", "React", "FastAPI", "Python", "SQLModel", "LLM agents"],
+  knowsAbout: [
+    "Next.js",
+    "TypeScript",
+    "React",
+    "FastAPI",
+    "Python",
+    "SQLModel",
+    "LLM agents",
+    "n8n",
+    "Zapier",
+  ],
 };
 
 export default function Home() {
@@ -37,12 +47,12 @@ export default function Home() {
       <Hero />
       <Marquee />
       <main>
+        <Hire />
         <Building />
         <GitHubSection />
-        <Portfolio />
         <Stack />
         <Reading />
-        <WritingSection />
+        <WritingSection limit={3} />
         <Resume />
         <Contact />
       </main>

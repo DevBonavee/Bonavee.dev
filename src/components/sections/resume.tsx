@@ -1,3 +1,4 @@
+import { Container } from "@/components/container";
 import { Reveal } from "@/components/motion/reveal";
 import { cvs } from "@content/cvs";
 import { education, experience, facts } from "@content/resume";
@@ -7,7 +8,7 @@ import { SecHead } from "./sec-head";
 export function Resume() {
   return (
     <section className="block" id="resume">
-      <div className="wrap">
+      <Container>
         <SecHead
           path={
             <>
@@ -79,7 +80,7 @@ export function Resume() {
             </div>
           </Reveal>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

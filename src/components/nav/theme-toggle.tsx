@@ -4,7 +4,7 @@ import { useTheme } from "next-themes";
 
 // Switches theme with a circle that spreads from the click point (View Transitions API).
 // Falls back to an instant switch when the API is missing or motion is reduced.
-export function ThemeToggle() {
+export function ThemeToggle({ className }: { className?: string }) {
   const { resolvedTheme, setTheme } = useTheme();
 
   const toggle = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -39,7 +39,12 @@ export function ThemeToggle() {
   };
 
   return (
-    <button type="button" className="icon-btn" aria-label="Toggle light and dark theme" onClick={toggle}>
+    <button
+      type="button"
+      className={className ? `icon-btn ${className}` : "icon-btn"}
+      aria-label="Toggle light and dark theme"
+      onClick={toggle}
+    >
       <svg
         viewBox="0 0 24 24"
         fill="none"

@@ -373,3 +373,18 @@
     transform: none;
   }
 }
+
+/* wide screens: the GitHub panel and repo grid grow with the 1520px container */
+@layer components {
+  @media (min-width: 1280px) {
+    .gh-grid {
+      grid-template-columns: 1fr minmax(340px, 28%);
+    }
+    .repos {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+    .post {
+      grid-template-columns: 180px 1fr auto;
+    }
+  }
+}

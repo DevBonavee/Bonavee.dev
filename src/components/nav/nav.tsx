@@ -1,14 +1,45 @@
 "use client";
 
-import { m } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { navLinks } from "@content/site";
+import { navLinks, site } from "@content/site";
 import { StatusPill } from "./status-pill";
 import { ThemeToggle } from "./theme-toggle";
 
+const EASE = [0.75, 0, 0.2, 1] as const;
+const SECTION_IDS: readonly string[] = navLinks.filter((l) => l.href.startsWith("/#")).map((l) => l.id);
+
+// Which link gets the underline: "portfolio" anywhere under /portfolio; on / it follows the section in view.
+function useActive(pathname: string) {
+  const [section, setSection] = useState<string>("top");
+
+  useEffect(() => {
+    if (pathname !== "/") return;
+    const band = { rootMargin: "-45% 0px -50% 0px" };
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries)
+        if (e.isIntersecting) setSection(SECTION_IDS.includes(e.target.id) ? e.target.id : "top");
+    }, band);
+    // Sections without a nav link (hero, hire card, stack, contact) clear or keep the underline sensibly.
+    ["top", "hire", ...SECTION_IDS].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) io.observe(el);
+    });
+    return () => io.disconnect();
+  }, [pathname]);
+
+  if (pathname.startsWith("/portfolio")) return "portfolio";
+  if (pathname === "/") return section;
+  return null;
+}
+
 export function Nav() {
+  const pathname = usePathname();
+  const active = useActive(pathname);
   const [lifted, setLifted] = useState(false);
-  const [active, setActive] = useState<string | null>(null);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setLifted(window.scrollY > 30);
@@ -17,66 +48,122 @@ export function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Highlight the link for whichever section crosses the middle band of the viewport.
+  // Close the menu on navigation and on Escape; lock page scroll while it is open.
+  useEffect(() => setOpen(false), [pathname]);
   useEffect(() => {
-    const sections = navLinks
-      .map((l) => document.getElementById(l.id))
-      .filter((el): el is HTMLElement => el !== null);
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) if (e.isIntersecting) setActive(e.target.id);
-      },
-      { rootMargin: "-45% 0px -50% 0px" },
-    );
-    sections.forEach((s) => io.observe(s));
-    // Clear the underline when back above the first section.
-    const top = document.getElementById("top");
-    const topIo = new IntersectionObserver(([e]) => e.isIntersecting && setActive(null), {
-      rootMargin: "-45% 0px -50% 0px",
-    });
-    if (top) topIo.observe(top);
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    document.addEventListener("keydown", onKey);
+    document.documentElement.style.overflow = "hidden";
     return () => {
-      io.disconnect();
-      topIo.disconnect();
+      document.removeEventListener("keydown", onKey);
+      document.documentElement.style.overflow = "";
     };
-  }, []);
+  }, [open]);
+
+  const booking = site.bookingUrl
+    ? { href: site.bookingUrl, target: "_blank", rel: "noopener noreferrer" }
+    : { href: "/#contact" };
 
   return (
-    <nav className={lifted ? "nav lifted" : "nav"} aria-label="Main">
-      <div className="bar">
-        <a className="logo" href="#top" aria-label="Bonavee.dev home">
-          <span className="logo-mark">BV</span>
-          <span>
-            Bonavee<span className="text-accent-text">.dev</span>
-          </span>
-        </a>
-        <div className="nav-links">
-          {navLinks.map((l) => (
-            <a
-              key={l.id}
-              href={`#${l.id}`}
-              className={active === l.id ? "active" : undefined}
-              aria-current={active === l.id ? "true" : undefined}
-            >
-              {l.label}
-              {active === l.id && (
-                <m.span
-                  layoutId="nav-ind"
-                  className="nav-ind"
-                  transition={{ type: "spring", stiffness: 420, damping: 32 }}
-                />
-              )}
+    <>
+      <nav className={lifted ? "nav lifted" : "nav"} aria-label="Main">
+        <div className="bar">
+          <Link className="logo" href="/" aria-label="Bonavee.dev home">
+            <span className="logo-mark">BV</span>
+            <span>
+              Bonavee<span className="text-accent-text">.dev</span>
+            </span>
+          </Link>
+          <div className="nav-links">
+            {navLinks.map((l) => (
+              <Link
+                key={l.id}
+                href={l.href}
+                className={active === l.id ? "active" : undefined}
+                aria-current={active === l.id ? (l.id === "portfolio" ? "page" : "true") : undefined}
+              >
+                {l.label}
+                {active === l.id && (
+                  <m.span
+                    layoutId="nav-ind"
+                    className="nav-ind"
+                    transition={{ type: "spring", stiffness: 420, damping: 32 }}
+                  />
+                )}
+              </Link>
+            ))}
+          </div>
+          <div className="nav-right">
+            <StatusPill />
+            <ThemeToggle className="hide-xs" />
+            <a className="btn sm magnetic" {...booking}>
+              Book a call
             </a>
-          ))}
+            <button
+              type="button"
+              className="icon-btn menu-btn"
+              aria-expanded={open}
+              aria-controls="menu-sheet"
+              aria-label={open ? "Close menu" : "Open menu"}
+              onClick={() => setOpen((o) => !o)}
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+              >
+                {open ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h10" />}
+              </svg>
+            </button>
+          </div>
         </div>
-        <div className="nav-right">
-          <StatusPill />
-          <ThemeToggle />
-          <a className="btn sm magnetic" href="#contact">
-            Book a call
-          </a>
-        </div>
-      </div>
-    </nav>
+      </nav>
+
+      <AnimatePresence>
+        {open && (
+          <m.div
+            id="menu-sheet"
+            className="menu-sheet"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menu"
+            initial={{ clipPath: "inset(0 0 100% 0)" }}
+            animate={{ clipPath: "inset(0 0 0% 0)" }}
+            exit={{ clipPath: "inset(0 0 100% 0)" }}
+            transition={{ duration: 0.6, ease: EASE }}
+          >
+            <ul>
+              {navLinks.map((l, i) => (
+                <m.li
+                  key={l.id}
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.18 + i * 0.05, ease: [0.2, 0.8, 0.2, 1] }}
+                >
+                  <Link
+                    href={l.href}
+                    aria-current={active === l.id ? "true" : undefined}
+                    onClick={() => setOpen(false)}
+                  >
+                    <small>{String(i + 1).padStart(2, "0")}</small>
+                    {l.label}
+                  </Link>
+                </m.li>
+              ))}
+            </ul>
+            <div className="menu-foot">
+              <a className="btn" {...booking}>
+                Book a call
+              </a>
+              <span className="mono text-muted text-[13px]">{site.email}</span>
+              <ThemeToggle />
+            </div>
+          </m.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

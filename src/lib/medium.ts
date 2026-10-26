@@ -3,7 +3,8 @@ import { XMLParser } from "fast-xml-parser";
 
 const FEEDS = ["https://medium.com/feed/@bonavee120", "https://bonavee120.medium.com/feed"];
 const WPM = 230;
-const MAX_POSTS = 5;
+// Medium's feed carries the latest 10 posts; /writing shows them all, the homepage the first 3.
+const MAX_POSTS = 10;
 
 export type Post = { title: string; link: string; date: string; minutes: number };
 

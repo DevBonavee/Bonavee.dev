@@ -499,7 +499,7 @@
   }
   @media (min-width: 900px) {
     .stack-grid {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1.3fr 1fr 1fr;
     }
   }
   .stack-col,
@@ -1138,5 +1138,107 @@
 @media (prefers-reduced-motion: reduce) {
   .marquee-track {
     animation: none !important;
+  }
+}
+
+/* ---------- "Looking to hire?" card and writing footer link ---------- */
+@layer components {
+  .block.hire {
+    padding-block: 64px;
+  }
+  .hire-card {
+    display: grid;
+    gap: 22px;
+    padding: clamp(22px, 3.5vw, 40px);
+    text-decoration: none;
+    transition:
+      border-color 0.3s,
+      transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  @media (min-width: 900px) {
+    .hire-card {
+      grid-template-columns: 1.3fr 1fr auto;
+      align-items: center;
+    }
+  }
+  .hire-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+  }
+  .hire-card .path {
+    font-size: 12.5px;
+    color: var(--faint);
+    margin-bottom: 10px;
+  }
+  .hire-card .path b {
+    color: var(--accent-text);
+    font-weight: 500;
+  }
+  .hire-card h2 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(28px, 4vw, 48px);
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .hire-card h2 em {
+    font-style: normal;
+    color: var(--accent-text);
+  }
+  .hire-card p {
+    margin: 10px 0 0;
+    color: var(--muted);
+    max-width: 46ch;
+  }
+  .hire-list {
+    display: grid;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .hire-card:hover .btn svg.arrow {
+    transform: translateX(4px);
+  }
+  .all-posts {
+    margin: 22px 0 0;
+    font-family: var(--font-mono);
+    font-size: 13px;
+  }
+  .all-posts a {
+    color: var(--accent-text);
+    text-decoration: none;
+  }
+  .all-posts a:hover {
+    text-decoration: underline;
+  }
+
+  /* wide screens: grids grow, text keeps a readable measure */
+  @media (min-width: 1280px) {
+    .sec-head > p {
+      max-width: 52ch;
+    }
+    .projects {
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    }
+    .books {
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    }
+    .resume {
+      grid-template-columns: minmax(320px, 26%) 1fr;
+    }
+    .job {
+      grid-template-columns: 200px 1fr;
+    }
+    .feature p {
+      max-width: 60ch;
+    }
+    .hire-card p {
+      max-width: 56ch;
+    }
   }
 }

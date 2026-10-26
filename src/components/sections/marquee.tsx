@@ -8,6 +8,8 @@ const WORDS = [
   "SQLModel",
   "Alembic",
   "LLM agents",
+  "n8n",
+  "Zapier",
   "JavaScript",
 ];
 

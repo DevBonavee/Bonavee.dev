@@ -1,3 +1,4 @@
+import { Container } from "@/components/container";
 import { Reveal } from "@/components/motion/reveal";
 import Image from "next/image";
 import { getPortfolio } from "@/lib/portfolio";
@@ -44,7 +45,7 @@ export async function Portfolio() {
 
   return (
     <section className="block" id="portfolio">
-      <div className="wrap">
+      <Container>
         <SecHead
           path={
             <>
@@ -119,7 +120,7 @@ export async function Portfolio() {
             </Reveal>
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

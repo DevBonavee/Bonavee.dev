@@ -1,3 +1,4 @@
+import { Container } from "@/components/container";
 import { Reveal } from "@/components/motion/reveal";
 import { site } from "@content/site";
 import { getGitHub, type Activity } from "@/lib/github";
@@ -90,7 +91,7 @@ export async function GitHubSection() {
 
   return (
     <section className="block" id="github">
-      <div className="wrap">
+      <Container>
         <Head />
 
         {nothing ? (
@@ -213,7 +214,7 @@ export async function GitHubSection() {
             )}
           </>
         )}
-      </div>
+      </Container>
     </section>
   );
 }

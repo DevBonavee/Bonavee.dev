@@ -27,8 +27,14 @@
   --cell-0: rgba(242, 241, 236, 0.06);
   --shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.6);
   --r: 14px;
-  --maxw: 1180px;
+  --maxw: 1520px; /* the one page width: <Container>, the nav and every grid derive from it */
+  --gutter-xl: 56px;
   color-scheme: dark;
+}
+@media (min-width: 1680px) {
+  :root {
+    --gutter-xl: 64px;
+  }
 }
 
 /* No-JS fallback: follow the system setting until next-themes sets data-theme. */
@@ -96,6 +102,7 @@
   --radius-card: 14px;
   --radius-btn: 12px;
   --radius-nav: 18px;
+  --container-container: var(--maxw);
 }
 
 /* ---------- base ---------- */
@@ -152,7 +159,16 @@
       padding-right: max(32px, env(safe-area-inset-right, 0px));
     }
   }
+  @media (min-width: 1280px) {
+    .wrap {
+      padding-left: max(var(--gutter-xl), env(safe-area-inset-left, 0px));
+      padding-right: max(var(--gutter-xl), env(safe-area-inset-right, 0px));
+    }
+  }
 
+  .mono {
+    font-family: var(--font-mono);
+  }
   .eyebrow {
     font-family: var(--font-mono);
     font-size: 12px;
@@ -316,7 +332,7 @@
     align-items: center;
     gap: 16px;
     height: 60px;
-    max-width: 1156px;
+    max-width: calc(var(--maxw) - 24px);
     margin-inline: auto;
     padding-left: 12px;
     padding-right: 10px;
@@ -417,12 +433,77 @@
       margin-left: 12px;
     }
   }
+  /* From 1280px the nav box lines up with the content edges, logo on the edge. */
+  @media (min-width: 1280px) {
+    .nav .bar {
+      max-width: calc(var(--maxw) - 2 * var(--gutter-xl) + 48px);
+    }
+  }
+  .menu-btn {
+    display: grid;
+  }
+  @media (min-width: 1180px) {
+    .menu-btn {
+      display: none;
+    }
+  }
+  .menu-sheet {
+    position: fixed;
+    inset: 0;
+    z-index: 49;
+    background: var(--bg-deep);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 110px max(24px, env(safe-area-inset-left, 0px)) 48px;
+  }
+  .menu-sheet ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 4px;
+  }
+  .menu-sheet li a {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(30px, 9vw, 48px);
+    letter-spacing: -0.04em;
+    line-height: 1.15;
+    color: var(--fg);
+  }
+  .menu-sheet li a small {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--faint);
+  }
+  .menu-sheet li a[aria-current],
+  .menu-sheet li a:hover {
+    color: var(--accent-text);
+  }
+  .menu-sheet .menu-foot {
+    margin-top: 36px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+  }
   @media (max-width: 599px) {
     .nav .status {
       display: none;
     }
   }
+  /* Narrow phones: the theme toggle moves into the menu sheet so the menu button fits. */
   @media (max-width: 440px) {
+    .nav .hide-xs {
+      display: none;
+    }
     .nav .bar {
       gap: 8px;
     }
@@ -449,6 +530,29 @@
     font-family: var(--font-mono);
     font-size: 12px;
     color: var(--faint);
+  }
+  .site-footer .socials {
+    display: flex;
+    gap: 6px;
+  }
+  .site-footer .socials a {
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    display: grid;
+    place-items: center;
+    color: var(--muted);
+    transition:
+      color 0.2s,
+      background 0.2s;
+  }
+  .site-footer .socials a:hover {
+    color: var(--accent-text);
+    background: var(--line);
+  }
+  .site-footer .socials svg {
+    width: 16px;
+    height: 16px;
   }
 
   /* ---------- film grain ---------- */

@@ -3,6 +3,8 @@ export const site = {
   name: "Chukwuebuka Bonaventure Nnamah",
   short: "Bonavee",
   role: "Full-stack developer working with AI",
+  // The "OPEN" pill at the top of the hero. Set open: false to hide it.
+  availability: { open: true, label: "Taking new projects this quarter" },
   email: "chukwuebukannamah@gmail.com",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://bonavee.dev",
   bookingUrl: process.env.NEXT_PUBLIC_BOOKING_URL ?? "",
@@ -16,13 +18,13 @@ export const site = {
   },
 } as const;
 
-// In-page sections linked from the nav, in page order.
+// Nav links, in order. `id` is the homepage section the underline follows while scrolling `/`.
 export const navLinks = [
-  { id: "building", label: "building" },
-  { id: "github", label: "github" },
-  { id: "portfolio", label: "portfolio" },
-  { id: "stack", label: "stack" },
-  { id: "reading", label: "reading" },
-  { id: "writing", label: "writing" },
-  { id: "resume", label: "resume" },
+  { id: "top", label: "home", href: "/" },
+  { id: "portfolio", label: "portfolio", href: "/portfolio" },
+  { id: "building", label: "now", href: "/#building" },
+  { id: "github", label: "github", href: "/#github" },
+  { id: "reading", label: "reading", href: "/#reading" },
+  { id: "writing", label: "writing", href: "/#writing" },
+  { id: "resume", label: "resume", href: "/#resume" },
 ] as const;

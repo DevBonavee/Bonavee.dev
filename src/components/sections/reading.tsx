@@ -1,3 +1,4 @@
+import { Container } from "@/components/container";
 import { Reveal } from "@/components/motion/reveal";
 import Image from "next/image";
 import { books } from "@content/books";
@@ -29,7 +30,7 @@ export function Reading() {
 
   return (
     <section className="block" id="reading">
-      <div className="wrap">
+      <Container>
         <SecHead
           path={
             <>
@@ -92,7 +93,7 @@ export function Reading() {
             );
           })}
         </ul>
-      </div>
+      </Container>
     </section>
   );
 }

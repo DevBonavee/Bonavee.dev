@@ -787,7 +787,8 @@
   @media (min-width: 900px) {
     .about {
       grid-template-columns: minmax(0, 320px) 1fr;
-      align-items: start;
+      align-items: stretch;
+      gap: 32px;
     }
   }
   .about-photo {
@@ -821,16 +822,24 @@
     padding: 5px 9px;
     border-radius: 6px;
   }
+  /* The story fills its column and its facts card sits flush with the photo's bottom edge. */
   .about-story {
-    display: grid;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     gap: 18px;
-    justify-items: start;
-    max-width: 41.3em; /* = 62ch */
   }
   .about-story p {
     margin: 0;
     color: var(--muted);
     font-size: 17px;
+  }
+  /* Justified beside the photo; on narrow screens it would open wide gaps between words. */
+  @media (min-width: 900px) {
+    .about-story p {
+      text-align: justify;
+      hyphens: auto;
+    }
   }
   .about-story .about-lead {
     color: var(--fg);
@@ -839,12 +848,31 @@
     font-weight: 500;
   }
   .about-facts {
-    margin: 0;
+    margin: auto 0 0;
     padding: 24px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
     width: 100%;
+  }
+  /* Sized to its content (not the reveal wrapper's 100% card height), pinned to the bottom edge. */
+  .about-story > .card.about-facts {
+    height: auto;
+  }
+  /* Labels on top, numbers on one line even when a label wraps. */
+  .about-facts > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  @media (min-width: 1180px) {
+    .about-facts {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .about-facts > div + div {
+      padding-left: 20px;
+      border-left: 1px solid var(--line);
+    }
   }
   .about-facts dt {
     font-family: var(--font-mono);
@@ -863,6 +891,10 @@
     font-weight: 800;
     letter-spacing: -0.03em;
     font-variant-numeric: tabular-nums;
+  }
+  .about-facts b i {
+    font-style: normal;
+    color: var(--accent-text);
   }
 
   /* ---------- CTA ---------- */

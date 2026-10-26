@@ -57,12 +57,9 @@ export function About() {
                       {f.count === undefined ? (
                         f.value
                       ) : (
-                        <>
-                          <b>
-                            <Value value={f.value} count={f.count} />
-                          </b>
-                          {f.suffix}
-                        </>
+                        <b>
+                          <Value value={f.value} count={f.count} suffix={f.suffix} />
+                        </b>
                       )}
                     </dd>
                   </div>

@@ -4,9 +4,10 @@ import { Reveal } from "@/components/motion/reveal";
 import { SampleTag, SecHead } from "@/components/sections/sec-head";
 import { portfolio, testimonials, workedWith } from "@/lib/content";
 import { Avatar } from "./bits";
+import { GoogleReviewsBlock } from "./google-reviews";
 import { QuoteRotator } from "./quote-rotator";
 
-// "Proof, not promises": the rotating testimonial, who I've worked with, and certifications.
+// "Proof, not promises": the rotating testimonial, Google reviews, who I've worked with, and certifications.
 export function Proof() {
   // Featured quotes lead the rotation.
   const quotes = [...testimonials.filter((t) => t.featured), ...testimonials.filter((t) => !t.featured)];
@@ -45,6 +46,8 @@ export function Proof() {
               />
             </Reveal>
           )}
+
+          <GoogleReviewsBlock />
 
           {workedWith.length > 0 && (
             <Reveal className="logos">

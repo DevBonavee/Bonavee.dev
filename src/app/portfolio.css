@@ -310,6 +310,135 @@
   .qdots button[aria-pressed="true"] {
     background: var(--accent);
   }
+  /* Google reviews */
+  .greviews {
+    display: grid;
+    gap: 16px;
+    padding-top: 6px;
+    min-width: 0;
+  }
+  .grev-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .grev-score {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .grev-num {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .grev-num b {
+    font-family: var(--font-display);
+    font-size: 40px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+  .grev-score small,
+  .grev-attr {
+    font-size: 12px;
+    color: var(--faint);
+  }
+  .grev-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .stars {
+    display: inline-flex;
+    gap: 2px;
+    color: var(--accent);
+  }
+  .stars svg {
+    width: 16px;
+    height: 16px;
+  }
+  .gmark {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 13px;
+    color: #fff;
+    background: conic-gradient(#ea4335 0 25%, #fbbc05 0 50%, #34a853 0 75%, #4285f4 0);
+    flex: none;
+    margin-left: auto;
+  }
+  .gmark.big {
+    width: 46px;
+    height: 46px;
+    font-size: 22px;
+    margin: 0;
+  }
+  .grev-row {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(min(84vw, 300px), 1fr);
+    gap: 14px;
+    overflow-x: auto;
+    padding: 4px 0 8px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+  }
+  .grev {
+    padding: 18px;
+    display: grid;
+    gap: 10px;
+    align-content: start;
+    scroll-snap-align: start;
+    transition:
+      transform 0.3s,
+      border-color 0.3s;
+  }
+  .grev:hover {
+    transform: translateY(-4px);
+    border-color: var(--line-strong);
+  }
+  .grev header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .grev header b {
+    display: block;
+    font-size: 14.5px;
+  }
+  .grev header a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .grev header a:hover b {
+    text-decoration: underline;
+  }
+  .grev header small {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+  }
+  .grev p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14.5px;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .avatar.sm {
+    width: 36px;
+    height: 36px;
+    font-size: 12px;
+  }
   .logos {
     display: flex;
     flex-wrap: wrap;

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { site } from "@content/site";
 import { Footer } from "@/components/footer";
 import { Intro } from "@/components/motion/intro";
+import { PageWipe } from "@/components/motion/page-wipe";
 import { PointerFx } from "@/components/motion/pointer-fx";
 import { Nav } from "@/components/nav/nav";
 import { Providers } from "@/components/providers";
@@ -79,6 +80,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <Nav />
           {children}
           <Footer />
+          <PageWipe />
         </Providers>
       </body>
     </html>

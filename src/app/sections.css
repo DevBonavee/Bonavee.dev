@@ -1282,11 +1282,12 @@
   .page-head h1,
   .page-head p {
     animation: rise-in 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    animation-delay: var(--arrive, 0s);
   }
   .page-head h1 {
-    animation-delay: 0.08s;
+    animation-delay: calc(var(--arrive, 0s) + 0.08s);
   }
   .page-head p {
-    animation-delay: 0.16s;
+    animation-delay: calc(var(--arrive, 0s) + 0.16s);
   }
 }

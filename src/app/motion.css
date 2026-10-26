@@ -1,5 +1,48 @@
 /* Motion layer: intro overlay, section reveals, custom cursor, theme wipe. Ported from design/mockup.html. */
 @layer components {
+  /* ---------- route change: yellow wipe with the destination path ---------- */
+  .page-wipe {
+    position: fixed;
+    inset: 0;
+    z-index: 95;
+    display: grid;
+    place-items: center;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-size: clamp(16px, 2vw, 22px);
+    font-weight: 700;
+    pointer-events: none;
+    clip-path: inset(100% 0 0 0);
+  }
+  .page-wipe.in {
+    clip-path: inset(0 0 0 0);
+    pointer-events: auto;
+    transition: clip-path 0.45s cubic-bezier(0.75, 0, 0.2, 1);
+  }
+  .page-wipe.out {
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 0.5s cubic-bezier(0.75, 0, 0.2, 1);
+  }
+  .page-wipe span {
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+      opacity 0.25s,
+      transform 0.25s;
+  }
+  .page-wipe.in span {
+    opacity: 1;
+    transform: none;
+    transition-delay: 0.2s;
+  }
+  /* While the panel clears, the new page's hero waits a beat so its rise is visible. */
+  [data-pt="arrive"] {
+    --arrive: 0.3s;
+  }
+  [data-pt="arrive"] .hero {
+    --boot: 0.3s;
+  }
+
   /* ---------- intro ---------- */
   .boot,
   .boot-y {

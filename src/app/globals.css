@@ -623,3 +623,46 @@
     display: none !important;
   }
 }
+
+/* Phones and tablets: big display headings step down so they don't crowd small screens.
+   Placed last so these win over the per-section sizes in hero/sections/portfolio.css. */
+@layer components {
+  @media (max-width: 1023px) {
+    .code-name {
+      font-size: clamp(36px, 8vw, 64px);
+    }
+    .phero-h {
+      font-size: clamp(30px, 5vw, 46px);
+    }
+    .page-head h1 {
+      font-size: clamp(32px, 5.4vw, 52px);
+    }
+    .cs-head h1 {
+      font-size: clamp(32px, 5vw, 50px);
+    }
+    .sec-head h2 {
+      font-size: clamp(28px, 4.6vw, 44px);
+    }
+    .mega {
+      font-size: clamp(38px, 7vw, 60px);
+    }
+  }
+  @media (max-width: 599px) {
+    .code-name {
+      font-size: clamp(32px, 9vw, 38px);
+    }
+    .phero-h {
+      font-size: clamp(28px, 7.6vw, 32px);
+    }
+    .page-head h1,
+    .cs-head h1 {
+      font-size: clamp(30px, 8vw, 34px);
+    }
+    .sec-head h2 {
+      font-size: clamp(26px, 7vw, 30px);
+    }
+    .mega {
+      font-size: clamp(36px, 10vw, 42px);
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import "server-only";
 import { projects as manual, type Project } from "@content/projects";
-import { get, REVALIDATE, USER } from "./github";
+import { get, REVALIDATE, titleCase, USER } from "./github";
 import { publicFileExists } from "./public-file";
 
 // Portfolio cards = every GitHub repo with a working live site (newest first) + manual entries
@@ -91,13 +91,6 @@ async function ogImage(url: string): Promise<string | undefined> {
     return undefined;
   }
 }
-
-const titleCase = (name: string) =>
-  name
-    .split(/[-_]+/)
-    .filter(Boolean)
-    .map((w) => w[0].toUpperCase() + w.slice(1))
-    .join(" ");
 
 async function fromGitHub(): Promise<PortfolioProject[]> {
   const raw = await get<RawRepo[]>(`/users/${USER}/repos?per_page=100&sort=updated`);

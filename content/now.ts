@@ -1,8 +1,15 @@
-// "Currently building": the one project getting most of the hours right now.
-// `sample: true` shows a dashed "sample" tag; remove it once this is real.
+// "Currently building" now fills itself from GitHub: the public repo you pushed to most recently,
+// its description, top languages and latest commits (see src/lib/building.ts). Refreshes hourly.
+// - To show a specific repo instead, set `repo` below, e.g. repo: "PlastiCash".
+// - To keep a repo out (experiments, homework), add the topic "no-now" to it on GitHub.
+// - For a progress bar, create a milestone in that repo on GitHub; the bar shows how many of
+//   its issues are closed. Without an open milestone the bar is hidden.
+// Everything else in this file is only shown if GitHub can't be reached.
+// `sample: true` shows a dashed "sample" tag on that fallback.
 export type NowNote = { date: string; text: string; state: "done" | "now" };
 
 export type Now = {
+  repo?: string; // pin a GitHub repo by name
   title: string;
   description: string;
   tags: string[];

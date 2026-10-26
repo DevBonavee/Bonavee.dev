@@ -44,6 +44,14 @@ function headers(): HeadersInit {
   };
 }
 
+// "savings_circle" -> "Savings Circle"; names like "PlastiCash" keep their casing.
+export const titleCase = (name: string) =>
+  name
+    .split(/[-_]+/)
+    .filter(Boolean)
+    .map((w) => w[0].toUpperCase() + w.slice(1))
+    .join(" ");
+
 export async function get<T>(path: string): Promise<T | null> {
   try {
     const res = await fetch(`${API}${path}`, {

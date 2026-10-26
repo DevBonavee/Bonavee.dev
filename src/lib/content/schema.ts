@@ -10,6 +10,7 @@ const percent = z.number().min(0).max(100);
 
 // ---------- now.ts ----------
 export const nowSchema = z.object({
+  repo: z.string().optional(), // pin "Currently building" to this GitHub repo
   title: text,
   description: text,
   tags: z.array(text),

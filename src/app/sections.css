@@ -139,6 +139,24 @@
     font-size: clamp(26px, 3.2vw, 38px);
     line-height: 1.05;
   }
+  /* Live GitHub card: activity line and link sit at the bottom of the card. */
+  .feature .activity {
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line-strong);
+  }
+  .feature .activity .row {
+    flex-wrap: wrap;
+    gap: 6px 16px;
+    color: var(--muted);
+  }
+  .feature h3 a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .feature h3 a:hover {
+    color: var(--accent-text);
+  }
   .feature p {
     color: var(--muted);
     margin: 0;

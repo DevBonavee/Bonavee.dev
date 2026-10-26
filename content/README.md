@@ -78,6 +78,6 @@ Drop the image into `public/hero/`. Photos play in file-name order, so name them
 - `portfolio.ts`: the /portfolio headline, subline, stat tiles and certifications. In the headline, `*web apps*` turns yellow and `**grow.**` sits on the yellow bar. A stat with a `home` label also shows in the homepage hero, so both pages always agree.
 - `about.ts`: the "From operations to code" story and its facts.
 - `process.ts`: the five "How we'll work" steps.
-- `now.ts`: what you're building right now, its progress and the progress notes.
+- `now.ts`: "Currently building" fills itself from GitHub: the repo you pushed to most recently, its description, languages and latest commits. Set `repo` here to pin a different one, or add the topic `no-now` to a repo on GitHub to skip it. For a progress bar, create a milestone in that repo on GitHub. The rest of this file only shows if GitHub can't be reached.
 - `resume.ts`: the experience and education timeline.
 - `projects.ts`: extra project cards that aren't on GitHub. Repos with a live site show up on their own.

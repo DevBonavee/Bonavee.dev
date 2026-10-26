@@ -7,22 +7,25 @@ import { SampleTag, SecHead } from "./sec-head";
 const COVER_STYLES = ["c1", "c2", "c3"];
 
 // Entries for the current month, or for the latest month that has any.
+// Returns that month too, so the heading names the month the books belong to.
 function shelf(today: Date) {
   const current = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}`;
-  const thisMonth = books.filter((b) => b.month === current);
-  if (thisMonth.length) return thisMonth;
+  if (books.some((b) => b.month === current)) {
+    return { shown: current, isCurrent: true, list: books.filter((b) => b.month === current) };
+  }
   const latest = books
     .map((b) => b.month)
     .filter((m) => m < current)
     .sort()
     .at(-1);
-  return books.filter((b) => b.month === latest);
+  if (!latest) return { shown: current, isCurrent: true, list: [] };
+  return { shown: latest, isCurrent: false, list: books.filter((b) => b.month === latest) };
 }
 
 export function Reading() {
-  const today = new Date();
-  const month = today.toLocaleString("en-US", { month: "long" });
-  const list = shelf(today);
+  const { shown, isCurrent, list } = shelf(new Date());
+  const [y, m] = shown.split("-").map(Number);
+  const month = new Date(y, m - 1, 1).toLocaleString("en-US", { month: "long" });
 
   return (
     <section className="block" id="reading">
@@ -39,7 +42,7 @@ export function Reading() {
             </>
           }
         >
-          What&apos;s on my desk this month.{" "}
+          {isCurrent ? "What's on my desk this month." : `What was on my desk in ${month}.`}{" "}
           <SampleTag show={list.some((b) => b.sample)}>sample books</SampleTag>
         </SecHead>
 

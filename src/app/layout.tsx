@@ -6,6 +6,9 @@ import { PointerFx } from "@/components/motion/pointer-fx";
 import { Nav } from "@/components/nav/nav";
 import { Providers } from "@/components/providers";
 import { INTRO_SCRIPT } from "@/lib/intro";
+// Validates every file in content/ at build time; a typo fails the build with a clear message.
+import "@/lib/content";
+import { getCaseStudies } from "@/lib/case-studies";
 import { instrumentSans, jetbrainsMono, unbounded } from "./fonts";
 import "./globals.css";
 
@@ -53,6 +56,9 @@ export const viewport: Viewport = {
     { media: "(prefers-color-scheme: light)", color: "#F2F1EC" },
   ],
 };
+
+// Same for the case-study MDX files.
+getCaseStudies();
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (

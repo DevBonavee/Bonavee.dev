@@ -1,7 +1,7 @@
 import { Container } from "@/components/container";
 import Link from "next/link";
-import { portfolio } from "@content/portfolio";
 import { site } from "@content/site";
+import { portfolio } from "@/lib/content";
 import { getHeroPhotos } from "@/lib/hero-photos";
 import { CodeName } from "./code-name";
 import { FieldCanvas } from "./field-canvas";
@@ -36,6 +36,8 @@ const Arrow = ({ w = "2.4" }: { w?: string }) => (
 export function Hero() {
   const photos = getHeroPhotos();
   const { availability } = site;
+  // Stats marked `home` in content/portfolio.ts, so the two heroes always agree.
+  const homeStats = portfolio.stats.filter((st) => st.home);
   const [label, quarter] = availability.label.split(/(?= this quarter)/);
 
   return (
@@ -75,15 +77,15 @@ export function Hero() {
             </a>
           </div>
           <dl className="hero-stats">
-            {portfolio.stats.map((st) => (
+            {homeStats.map((st) => (
               <div key={st.label}>
-                <dt className="sr-only">{st.label}</dt>
+                <dt className="sr-only">{st.home}</dt>
                 <dd>
                   <b>
                     {st.suffix ? st.value.slice(0, -st.suffix.length) : st.value}
                     {st.suffix && <i>{st.suffix}</i>}
                   </b>
-                  <span aria-hidden="true">{st.label}</span>
+                  <span aria-hidden="true">{st.home}</span>
                 </dd>
               </div>
             ))}

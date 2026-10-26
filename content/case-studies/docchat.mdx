@@ -1,0 +1,38 @@
+---
+title: DocChat
+slug: docchat
+summary: Ask questions about your PDFs and get answers with the exact source pages.
+category: AI
+featured: true
+order: 2
+role: AI + full-stack build
+timeline: 4 weeks
+stack: [React, Python, FastAPI, pgvector]
+cover: /work/docchat/cover.png
+gallery: []
+results:
+  - { value: "70%", label: "less time searching" }
+  - { value: "2.1s", label: "average answer" }
+  - { value: "100%", label: "answers cite a source" }
+source: https://github.com/Bonvee120
+testimonial: docchat-client
+draft: true
+---
+
+## The problem
+
+Staff spent hours digging through policy PDFs, and answers in the team chat were often outdated or wrong.
+
+## What I built
+
+- Upload and indexing pipeline with chunking and embeddings
+- Retrieval with page-level citations shown next to every answer
+- Streaming chat UI with feedback buttons to flag weak answers
+
+## How it works
+
+Each PDF is split into overlapping chunks, embedded and stored in Postgres with pgvector. A question pulls the closest chunks, the model answers only from them, and the UI shows the page each claim came from.
+
+## Results
+
+Staff stopped asking the same policy questions in chat, and every answer now points to the page it came from.

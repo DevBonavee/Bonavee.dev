@@ -11,7 +11,7 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
-    "@upstash/redis": "^1.39.0",
+    "@upstash/redis": "^1.40.0",
     "fast-xml-parser": "^5.11.2",
     "framer-motion": "^14.6.0",
     "gray-matter": "^4.0.3",

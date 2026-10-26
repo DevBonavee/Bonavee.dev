@@ -5,7 +5,7 @@ import { getPortfolio } from "@/lib/portfolio";
 import { SampleTag, SecHead } from "./sec-head";
 
 // Drawn stand-ins for a missing screenshot, cycling through three looks.
-function Placeholder({ variant }: { variant: number }) {
+export function Placeholder({ variant }: { variant: number }) {
   if (variant === 1)
     return (
       <div className="canvas" aria-hidden="true">
@@ -44,21 +44,21 @@ export async function Portfolio() {
   const anySample = projects.some((p) => p.sample);
 
   return (
-    <section className="block" id="portfolio">
+    <section className="block" id="more">
       <Container>
         <SecHead
           path={
             <>
-              ~/<b>portfolio/</b>
+              bonavee.dev/portfolio<b>#more</b>
             </>
           }
           title={
             <>
-              My <em>portfolio</em>
+              More <em>projects</em>
             </>
           }
         >
-          Past projects with screenshots, live demos and source.{" "}
+          Everything else with a live site. New repos show up here on their own.{" "}
           <SampleTag show={anySample}>sample projects</SampleTag>
         </SecHead>
 

@@ -17,7 +17,7 @@ The build checks every file here. If something is wrong, such as a missing field
    - `live` and `source`: full links, or delete the lines.
    - `testimonial`: the `id` of a quote in `testimonials.ts`, or delete the line.
    - `draft: true` shows a dashed "sample" tag. Delete it when the case study is real.
-3. Write the story under the headings `## The problem`, `## What I built`, `## How it works` and `## Results`. Plain Markdown works: paragraphs, `- ` lists, **bold**, links.
+3. Write the story under the headings `## The problem`, `## What I built`, `## How it works` and `## Results`. The first two sit side by side on the page; any other heading you add shows full width below them. Plain Markdown works: paragraphs, `- ` lists, **bold**, links.
 4. Put images in `public/work/<slug>/`. Use `cover.png` for the card, and list any others under `gallery`, for example `gallery: [/work/invoice-bot/1.png, /work/invoice-bot/2.png]`.
 
 The three files that are there now (LedgerLite, DocChat, SustyHub) are samples. Replace them with your own work or delete them.
@@ -54,7 +54,7 @@ Drop the image into `public/hero/`. Photos play in file-name order, so name them
 ## The other files
 
 - `site.ts`: your name, email, social links and the "OPEN · Taking new projects" pill. Set `availability.open` to `false` to hide the pill.
-- `portfolio.ts`: the /portfolio headline, subline, stat tiles and certifications. A stat with a `home` label also shows in the homepage hero, so both pages always agree.
+- `portfolio.ts`: the /portfolio headline, subline, stat tiles and certifications. In the headline, `*web apps*` turns yellow and `**grow.**` sits on the yellow bar. A stat with a `home` label also shows in the homepage hero, so both pages always agree.
 - `about.ts`: the "From operations to code" story and its facts.
 - `process.ts`: the five "How we'll work" steps.
 - `now.ts`: what you're building right now, its progress and the progress notes.

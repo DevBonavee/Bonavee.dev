@@ -9,21 +9,29 @@ import { StatusPill } from "./status-pill";
 import { ThemeToggle } from "./theme-toggle";
 
 const EASE = [0.75, 0, 0.2, 1] as const;
-const SECTION_IDS: readonly string[] = navLinks.filter((l) => l.href.startsWith("/#")).map((l) => l.id);
+// Pages where the underline follows the section in view, and the sections it can land on.
+const TRACKED: Record<string, readonly string[]> = {
+  "/": ["building", "github", "reading", "writing", "resume"],
+  "/now": ["building", "github", "reading"],
+};
 
-// Which link gets the underline: "portfolio" anywhere under /portfolio; on / it follows the section in view.
+// Which link gets the underline: "projects" anywhere under /portfolio, the matching link on /writing and
+// /resume, and on / and /now whichever section is in view.
 function useActive(pathname: string) {
-  const [section, setSection] = useState<string>("top");
+  const [section, setSection] = useState<string | null>(null);
 
   useEffect(() => {
-    if (pathname !== "/") return;
+    const ids = TRACKED[pathname];
+    if (!ids) return;
+    // On the homepage the hero, hire card, stack and contact have no link: they clear the underline to "home".
+    const fallback = pathname === "/" ? "top" : ids[0];
+    setSection(fallback);
     const band = { rootMargin: "-45% 0px -50% 0px" };
     const io = new IntersectionObserver((entries) => {
       for (const e of entries)
-        if (e.isIntersecting) setSection(SECTION_IDS.includes(e.target.id) ? e.target.id : "top");
+        if (e.isIntersecting) setSection(ids.includes(e.target.id) ? e.target.id : fallback);
     }, band);
-    // Sections without a nav link (hero, hire card, stack, contact) clear or keep the underline sensibly.
-    ["top", "hire", ...SECTION_IDS].forEach((id) => {
+    [...(pathname === "/" ? ["top", "hire"] : []), ...ids].forEach((id) => {
       const el = document.getElementById(id);
       if (el) io.observe(el);
     });
@@ -31,7 +39,9 @@ function useActive(pathname: string) {
   }, [pathname]);
 
   if (pathname.startsWith("/portfolio")) return "portfolio";
-  if (pathname === "/") return section;
+  if (TRACKED[pathname]) return section ?? (pathname === "/" ? "top" : TRACKED[pathname][0]);
+  if (pathname.startsWith("/writing")) return "writing";
+  if (pathname.startsWith("/resume")) return "resume";
   return null;
 }
 
@@ -81,7 +91,7 @@ export function Nav() {
                 key={l.id}
                 href={l.href}
                 className={active === l.id ? "active" : undefined}
-                aria-current={active === l.id ? (l.id === "portfolio" ? "page" : "true") : undefined}
+                aria-current={active === l.id ? (l.href === pathname ? "page" : "true") : undefined}
               >
                 {l.label}
                 {active === l.id && (

@@ -18,13 +18,14 @@ export const site = {
   },
 } as const;
 
-// Nav links, in order. `id` is the homepage section the underline follows while scrolling `/`.
+// Nav links, in order. `href` is the page each link opens. `id` is the section the underline follows
+// while scrolling the homepage and /now.
 export const navLinks = [
   { id: "top", label: "home", href: "/" },
   { id: "portfolio", label: "projects", href: "/portfolio" },
-  { id: "building", label: "now", href: "/#building" },
-  { id: "github", label: "github", href: "/#github" },
-  { id: "reading", label: "reading", href: "/#reading" },
-  { id: "writing", label: "writing", href: "/#writing" },
-  { id: "resume", label: "resume", href: "/#resume" },
+  { id: "building", label: "now", href: "/now" },
+  { id: "github", label: "github", href: "/now#github" },
+  { id: "reading", label: "reading", href: "/now#reading" },
+  { id: "writing", label: "writing", href: "/writing" },
+  { id: "resume", label: "resume", href: "/resume" },
 ] as const;

@@ -1242,3 +1242,51 @@
     }
   }
 }
+
+/* Standalone page header (/now). */
+@layer components {
+  .page-head {
+    position: relative;
+    border-bottom: 1px solid var(--line);
+    padding-block: 140px 64px;
+    background: radial-gradient(60% 120% at 90% 0%, var(--accent-soft), transparent 60%);
+  }
+  .page-head .path {
+    font-size: 12.5px;
+    color: var(--faint);
+  }
+  .page-head .path b {
+    color: var(--accent-text);
+    font-weight: 500;
+  }
+  .page-head h1 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(38px, 6.4vw, 88px);
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+    margin: 14px 0 0;
+    text-wrap: balance;
+  }
+  .page-head h1 em {
+    font-style: normal;
+    color: var(--accent-text);
+  }
+  .page-head p {
+    margin: 22px 0 0;
+    color: var(--muted);
+    font-size: clamp(17px, 1.7vw, 20px);
+    max-width: 48ch;
+  }
+  .page-head .path,
+  .page-head h1,
+  .page-head p {
+    animation: rise-in 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+  .page-head h1 {
+    animation-delay: 0.08s;
+  }
+  .page-head p {
+    animation-delay: 0.16s;
+  }
+}

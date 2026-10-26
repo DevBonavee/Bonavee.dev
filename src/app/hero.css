@@ -118,7 +118,7 @@
     font-size: clamp(17px, 1.8vw, 21px);
     line-height: 1.5;
     color: var(--muted);
-    max-width: 34ch;
+    max-width: 22.6em; /* = 34ch */
     margin: 22px 0 0;
   }
   .rot {
@@ -700,7 +700,7 @@
     margin: 22px 0 18px;
   }
   .hero .lede {
-    max-width: 40ch;
+    max-width: 26.6em; /* = 40ch */
     line-height: 1.62;
     margin-top: 30px;
   }
@@ -913,7 +913,7 @@
     }
     .hero .lede {
       font-size: 22px;
-      max-width: 42ch;
+      max-width: 28em; /* = 42ch */
     }
     .hero-stats {
       max-width: 620px;

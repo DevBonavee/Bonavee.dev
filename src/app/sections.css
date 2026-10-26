@@ -84,7 +84,7 @@
     color: var(--accent-text);
   }
   .sec-head > p {
-    max-width: 42ch;
+    max-width: 28em; /* = 42ch */
     color: var(--muted);
     margin: 0;
   }
@@ -142,7 +142,7 @@
   .feature p {
     color: var(--muted);
     margin: 0;
-    max-width: 52ch;
+    max-width: 34.6em; /* = 52ch */
   }
   .progress {
     display: grid;
@@ -1190,7 +1190,7 @@
   .hire-card p {
     margin: 10px 0 0;
     color: var(--muted);
-    max-width: 46ch;
+    max-width: 30.6em; /* = 46ch */
   }
   .hire-list {
     display: grid;
@@ -1220,7 +1220,7 @@
   /* wide screens: grids grow, text keeps a readable measure */
   @media (min-width: 1280px) {
     .sec-head > p {
-      max-width: 52ch;
+      max-width: 34.6em; /* = 52ch */
     }
     .projects {
       grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -1235,10 +1235,10 @@
       grid-template-columns: 200px 1fr;
     }
     .feature p {
-      max-width: 60ch;
+      max-width: 40em; /* = 60ch */
     }
     .hire-card p {
-      max-width: 56ch;
+      max-width: 37.3em; /* = 56ch */
     }
   }
 }
@@ -1276,7 +1276,7 @@
     margin: 22px 0 0;
     color: var(--muted);
     font-size: clamp(17px, 1.7vw, 20px);
-    max-width: 48ch;
+    max-width: 32em; /* = 48ch */
   }
   .page-head .path,
   .page-head h1,

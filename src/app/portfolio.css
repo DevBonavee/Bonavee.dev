@@ -80,7 +80,7 @@
     margin: 0;
     color: var(--muted);
     font-size: clamp(17px, 1.7vw, 20px);
-    max-width: 48ch;
+    max-width: 32em; /* = 48ch */
   }
   .phero-card {
     padding: 22px;
@@ -254,7 +254,7 @@
     line-height: 1.25;
     letter-spacing: -0.02em;
     text-wrap: balance;
-    max-width: 44ch;
+    max-width: 40.3em; /* = 44ch */
   }
   .quote-big figcaption {
     display: flex;
@@ -593,7 +593,7 @@
     margin: 0;
     color: var(--muted);
     font-size: 15px;
-    max-width: 60ch;
+    max-width: 40em; /* = 60ch */
   }
   .svc ul {
     list-style: none;
@@ -825,7 +825,7 @@
     display: grid;
     gap: 18px;
     justify-items: start;
-    max-width: 62ch;
+    max-width: 41.3em; /* = 62ch */
   }
   .about-story p {
     margin: 0;
@@ -869,7 +869,8 @@
   .pcta {
     padding-block: 90px;
   }
-  .pcta-card {
+  /* .card.pcta-card: beats the base .card background, which globals.css declares later. */
+  .card.pcta-card {
     padding: clamp(24px, 4vw, 48px);
     display: grid;
     gap: 24px;
@@ -910,7 +911,7 @@
   .pcta-card p {
     margin: 12px 0 0;
     font-size: 17px;
-    max-width: 44ch;
+    max-width: 29.3em; /* = 44ch */
   }
   .pcta-actions {
     display: grid;
@@ -989,7 +990,7 @@
     margin: 0;
     color: var(--muted);
     font-size: 18px;
-    max-width: 56ch;
+    max-width: 37.3em; /* = 56ch */
   }
   .cs-meta {
     margin: 0;
@@ -1065,7 +1066,7 @@
     color: var(--muted);
     font-size: 16px;
     margin: 0;
-    max-width: 62ch;
+    max-width: 41.3em; /* = 62ch */
   }
   .cs-sec p + p {
     margin-top: 12px;

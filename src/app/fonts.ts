@@ -8,10 +8,10 @@ export const unbounded = localFont({
   src: "./fonts/Unbounded-latin.woff2",
   weight: "600 900",
   variable: "--font-unbounded",
-  // "optional": the preloaded font is used when it's ready by first paint (almost always), otherwise the
-  // fallback stays for that page view. Unbounded is much wider than any fallback, so swapping it in late
-  // reflowed every heading and cost a lot of layout shift.
-  display: "optional",
+  display: "swap",
+  // Our own size-matched Arial Black fallback (globals.css) instead of Next's Arial one: Unbounded's
+  // heavy weights are ~8% wider than bold Arial, so headings re-wrapped when the font arrived.
+  adjustFontFallback: false,
 });
 
 export const instrumentSans = localFont({

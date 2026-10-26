@@ -5,6 +5,19 @@
 @import "./portfolio.css";
 @import "./motion.css";
 
+/* Shown for the moment before Unbounded loads. Arial Black scaled to Unbounded's width (measured on
+   the site's headings at weights 800-900), so text wraps the same and nothing jumps when it swaps.
+   For the same reason, text measures use em, not ch: ch is the width of "0" in whichever font is
+   showing, so a ch width changes size when the font swaps. (Instrument Sans: 1ch = 0.666em.) */
+@font-face {
+  font-family: "Unbounded Fallback";
+  src: local("Arial Black"), local("ArialBlack"), local("Arial-Black");
+  size-adjust: 117%;
+  ascent-override: 85%;
+  descent-override: 21%;
+  line-gap-override: 0%;
+}
+
 /* Theme follows next-themes: <html data-theme="dark|light">. Dark green is the default. */
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
@@ -97,7 +110,7 @@
   --color-accent-soft: var(--accent-soft);
   --color-ok: var(--ok);
   --color-off: var(--off);
-  --font-display: var(--font-unbounded), "Arial Black", system-ui, sans-serif;
+  --font-display: var(--font-unbounded), "Unbounded Fallback", "Arial Black", system-ui, sans-serif;
   --font-sans: var(--font-instrument), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
   --radius-card: 14px;

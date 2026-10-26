@@ -68,7 +68,7 @@ export function Hero() {
           </p>
           <div className="cta-row">
             <Link className="btn magnetic" href="/portfolio">
-              See my portfolio
+              See my projects
               <Arrow />
             </Link>
             <a className="btn ghost magnetic" href="#contact">

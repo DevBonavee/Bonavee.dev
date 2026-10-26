@@ -21,8 +21,9 @@ export function SecHead({
   );
 }
 
-export function SampleTag({ show = true, children = "sample" }: { show?: boolean; children?: string }) {
-  return show ? <span className="tag sample">{children}</span> : null;
+// Dashed "sample" tag, shown only when `show` is true (a missing flag means the content is real).
+export function SampleTag({ show, children = "sample" }: { show: boolean | undefined; children?: string }) {
+  return show === true ? <span className="tag sample">{children}</span> : null;
 }
 
 // Renders `backtick` spans in content strings as inline code.

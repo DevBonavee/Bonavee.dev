@@ -8,13 +8,13 @@ import { Proof } from "@/components/portfolio/proof";
 import { Services } from "@/components/portfolio/services";
 import { Portfolio } from "@/components/sections/portfolio";
 
-// "More projects" lists GitHub repos with a live site, refreshed hourly.
+// "Projects" lists GitHub repos with a live site, refreshed hourly.
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Portfolio",
+  title: "Projects",
   description:
-    "Web apps, AI features and n8n/Zapier automations by Bonavee: case studies with results, services and prices, and how a project runs.",
+    "Web apps, AI features and n8n/Zapier automations by Bonavee: live projects, services and prices, and how a project runs.",
   alternates: { canonical: "/portfolio" },
 };
 
@@ -24,8 +24,8 @@ export default function PortfolioPage() {
     <>
       <PortfolioHero />
       <main>
-        <CaseStudies />
         <Portfolio />
+        <CaseStudies />
         <Proof />
         <Services />
         <Process />

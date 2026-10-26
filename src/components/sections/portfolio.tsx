@@ -44,21 +44,21 @@ export async function Portfolio() {
   const anySample = projects.some((p) => p.sample);
 
   return (
-    <section className="block" id="more">
+    <section className="block" id="projects">
       <Container>
         <SecHead
           path={
             <>
-              bonavee.dev/portfolio<b>#more</b>
+              bonavee.dev/portfolio<b>#projects</b>
             </>
           }
           title={
             <>
-              More <em>projects</em>
+              My <em>projects</em>
             </>
           }
         >
-          Everything else with a live site. New repos show up here on their own.{" "}
+          Live sites I built, with the source. New repos show up here on their own.{" "}
           <SampleTag show={anySample}>sample projects</SampleTag>
         </SecHead>
 

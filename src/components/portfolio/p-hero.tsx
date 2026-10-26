@@ -5,7 +5,7 @@ import { AvailLine } from "./avail-line";
 import { Arrow, booking, Marked, Value } from "./bits";
 
 const JUMPS = [
-  { href: "#work", label: "Case studies" },
+  { href: "#projects", label: "Projects" },
   { href: "#proof", label: "Proof" },
   { href: "#services", label: "Services" },
   { href: "#process", label: "Process" },
@@ -29,8 +29,8 @@ export function PortfolioHero() {
             <a className="btn magnetic" {...booking}>
               Book a call <Arrow />
             </a>
-            <a className="btn ghost magnetic" href="#work">
-              See case studies
+            <a className="btn ghost magnetic" href="#projects">
+              See projects
             </a>
           </div>
         </div>

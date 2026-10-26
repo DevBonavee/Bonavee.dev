@@ -21,7 +21,7 @@ export const site = {
 // Nav links, in order. `id` is the homepage section the underline follows while scrolling `/`.
 export const navLinks = [
   { id: "top", label: "home", href: "/" },
-  { id: "portfolio", label: "portfolio", href: "/portfolio" },
+  { id: "portfolio", label: "projects", href: "/portfolio" },
   { id: "building", label: "now", href: "/#building" },
   { id: "github", label: "github", href: "/#github" },
   { id: "reading", label: "reading", href: "/#reading" },

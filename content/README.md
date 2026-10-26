@@ -8,7 +8,30 @@ The build checks every file here. If something is wrong, such as a missing field
 
 ## Add a case study
 
-1. Copy `case-studies/ledgerlite.mdx` and rename it, for example `case-studies/invoice-bot.mdx`. The file name must match the `slug` inside it.
+Your GitHub projects already show on /portfolio under "My projects". A case study is the longer write-up for one project, with its own page. The section stays hidden until you add the first one.
+
+1. Create a file in `case-studies/`, for example `case-studies/invoice-bot.mdx`. The file name must match the `slug` inside it. Start it with this block:
+
+   ```
+   ---
+   title: Invoice Bot
+   slug: invoice-bot
+   summary: One sentence about what it does and for whom.
+   category: AI
+   featured: true
+   order: 1
+   role: Design + full-stack build
+   timeline: 4 weeks
+   stack: [Next.js, FastAPI, n8n]
+   cover: /work/invoice-bot/cover.png
+   results:
+     - { value: "5h", label: "saved every week" }
+     - { value: "200+", label: "invoices sent" }
+   live: https://example.com
+   source: https://github.com/Bonvee120/invoice-bot
+   ---
+   ```
+
 2. Edit the block between the two `---` lines:
    - `title`, `summary` (one sentence for the card), `role`, `timeline`, `stack`
    - `category`: one of `Web apps`, `AI`, `APIs`, `Websites`
@@ -16,11 +39,9 @@ The build checks every file here. If something is wrong, such as a missing field
    - `results`: two to four numbers, such as `{ value: "3×", label: "faster daily close" }`. The first two appear on the card.
    - `live` and `source`: full links, or delete the lines.
    - `testimonial`: the `id` of a quote in `testimonials.ts`, or delete the line.
-   - `draft: true` shows a dashed "sample" tag. Delete it when the case study is real.
+   - `draft: true` shows a dashed "sample" tag, if you want to publish an unfinished one.
 3. Write the story under the headings `## The problem`, `## What I built`, `## How it works` and `## Results`. The first two sit side by side on the page; any other heading you add shows full width below them. Plain Markdown works: paragraphs, `- ` lists, **bold**, links.
 4. Put images in `public/work/<slug>/`. Use `cover.png` for the card, and list any others under `gallery`, for example `gallery: [/work/invoice-bot/1.png, /work/invoice-bot/2.png]`.
-
-The three files that are there now (LedgerLite, DocChat, SustyHub) are samples. Replace them with your own work or delete them.
 
 ## Add or change a service
 

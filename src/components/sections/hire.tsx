@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Container } from "@/components/container";
 import { Reveal } from "@/components/motion/reveal";
 
-const ITEMS = ["Case studies", "Services & prices", "Process", "Testimonials"];
+const ITEMS = ["Projects", "Services & prices", "Process", "Testimonials"];
 
 // The homepage's bridge to /portfolio, the page that does the selling.
 export function Hire() {
@@ -19,8 +19,7 @@ export function Hire() {
                 Looking to <em>hire?</em>
               </h2>
               <p>
-                Case studies with real results, services and prices, how I work, and what clients say. All on
-                one page.
+                Live projects, services and prices, how I work, and what clients say. All on one page.
               </p>
             </div>
             <ul className="hire-list mono">
@@ -29,7 +28,7 @@ export function Hire() {
               ))}
             </ul>
             <span className="btn">
-              Open the portfolio
+              See my projects
               <svg
                 className="arrow"
                 viewBox="0 0 24 24"

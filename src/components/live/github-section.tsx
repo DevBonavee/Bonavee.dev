@@ -6,6 +6,7 @@ import { SecHead } from "../sections/sec-head";
 import { ContribGraph } from "./contrib-graph";
 import { CountUp } from "./count-up";
 import { RelTime } from "./rel-time";
+import { getPortfolio } from "@/lib/portfolio";
 
 const PROFILE = site.socials.github;
 
@@ -78,7 +79,8 @@ function Head() {
 }
 
 export async function GitHubSection() {
-  const gh = await getGitHub();
+  // Live projects are the same list /portfolio shows: every repo with a working live site.
+  const [gh, live] = await Promise.all([getGitHub(), getPortfolio()]);
   const nothing =
     gh.publicRepos === null && gh.repos === null && gh.activity === null && gh.calendar === null;
 
@@ -86,7 +88,7 @@ export async function GitHubSection() {
     { label: "public repos", value: gh.publicRepos },
     { label: "day streak", value: gh.streak },
     { label: "PRs merged", value: gh.mergedPrs },
-    { label: "portfolio repos", value: gh.repos?.length ?? null },
+    { label: "live projects", value: live.length || null },
   ].filter((s): s is { label: string; value: number } => s.value !== null);
 
   return (

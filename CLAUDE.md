@@ -1,6 +1,6 @@
 # Bonavee.dev: build brief
 
-This file tells Claude Code how to build the personal portfolio site for **Chukwuebuka Bonaventure Nnamah ("Bonavee")**, a full-stack developer who also builds AI features and **AI automations with n8n and Zapier**. GitHub: `Bonvee120`.
+This file tells Claude Code how to build the personal portfolio site for **Chukwuebuka Bonaventure Nnamah ("Bonavee")**, a full-stack developer who also builds AI features and **AI automations with n8n and Zapier**. GitHub: `DevBonavee`.
 
 `design/mockup.html` in this folder is the approved design. Open it in a browser and match it closely: colors, fonts, components, copy tone and every animation. The owner has signed off on the colors, fonts and motion, so do not change them. The mockup has two pages: the homepage, and the portfolio page (click "portfolio" in the nav or "See my portfolio" to see it, along with the yellow page transition). Its "Read case study" overlay shows the design of the `/portfolio/[slug]` page. When this brief and the mockup disagree, the brief wins. The mockup's "Preview controls" panel is a mockup-only tool and must not ship.
 
@@ -339,7 +339,7 @@ results:
   - { value: "3×", label: "faster daily close" }
   - { value: "120+", label: "traders onboarded" }
 live: https://example.com
-source: https://github.com/Bonvee120/ledgerlite
+source: https://github.com/DevBonavee/ledgerlite
 testimonial: client-name     # optional, matches a testimonial
 ---
 ```
@@ -379,9 +379,9 @@ Seed `content/case-studies/` with the three sample projects from the mockup (Led
   - Speaking: World Environment Day on Afia TV and Solid FM
 
 **GitHub (server-side, `lib/github.ts`, revalidate every hour)**
-- Repos: `GET https://api.github.com/users/Bonvee120/repos?per_page=100&sort=updated`. Keep repos whose `topics` include `"portfolio"`. Show name, description, language, stars and URL.
-- Recent activity: `GET https://api.github.com/users/Bonvee120/events/public?per_page=15`. Map PushEvent, PullRequestEvent (merged), WatchEvent, CreateEvent and ReleaseEvent to feed items.
-- Contribution graph and total: the GraphQL API `user(login:"Bonvee120"){ contributionsCollection { contributionCalendar { totalContributions weeks { contributionDays { date contributionCount contributionLevel } } } } }`. This needs `GITHUB_TOKEN` (a fine-grained token with read-only public access).
+- Repos: `GET https://api.github.com/users/DevBonavee/repos?per_page=100&sort=updated`. Keep repos whose `topics` include `"portfolio"`. Show name, description, language, stars and URL.
+- Recent activity: `GET https://api.github.com/users/DevBonavee/events/public?per_page=15`. Map PushEvent, PullRequestEvent (merged), WatchEvent, CreateEvent and ReleaseEvent to feed items.
+- Contribution graph and total: the GraphQL API `user(login:"DevBonavee"){ contributionsCollection { contributionCalendar { totalContributions weeks { contributionDays { date contributionCount contributionLevel } } } } }`. This needs `GITHUB_TOKEN` (a fine-grained token with read-only public access).
 - Compute the streak from the calendar. If the API fails, render the section with a quiet "GitHub is unavailable right now" state. Never crash the page.
 
 **Google reviews (`lib/google-reviews.ts`, server-only, revalidate every 86400s)**
@@ -400,7 +400,7 @@ Seed `content/case-studies/` with the three sample projects from the mockup (Led
 - LinkedIn: https://www.linkedin.com/in/chukwuebuka-bonaventure-nnamah
 - X: https://x.com/Bonaventure_NC
 - Facebook: https://www.facebook.com/share/1k1Eg1R8u1/
-- GitHub: https://github.com/Bonvee120
+- GitHub: https://github.com/DevBonavee
 - Medium: https://bonavee120.medium.com
 - Booking: `process.env.NEXT_PUBLIC_BOOKING_URL`, a Google Calendar appointment-schedule booking page. Open it in a new tab.
 

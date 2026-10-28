@@ -8,9 +8,9 @@ export const site = {
   email: "chukwuebukannamah@gmail.com",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://bonavee.dev",
   bookingUrl: process.env.NEXT_PUBLIC_BOOKING_URL ?? "",
-  github: "Bonvee120",
+  github: "DevBonavee",
   socials: {
-    github: "https://github.com/Bonvee120",
+    github: "https://github.com/DevBonavee",
     linkedin: "https://www.linkedin.com/in/chukwuebuka-bonaventure-nnamah",
     x: "https://x.com/Bonaventure_NC",
     facebook: "https://www.facebook.com/share/1k1Eg1R8u1/",

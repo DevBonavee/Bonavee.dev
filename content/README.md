@@ -28,7 +28,7 @@ Your GitHub projects already show on /portfolio under "My projects". A case stud
      - { value: "5h", label: "saved every week" }
      - { value: "200+", label: "invoices sent" }
    live: https://example.com
-   source: https://github.com/Bonvee120/invoice-bot
+   source: https://github.com/DevBonavee/invoice-bot
    ---
    ```
 

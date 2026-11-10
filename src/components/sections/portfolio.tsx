@@ -85,7 +85,7 @@ export async function Portfolio({ limit }: { limit?: number }) {
                           alt={`Screenshot of ${p.title}`}
                           fill
                           unoptimized={p.remote}
-                          sizes="(min-width: 1180px) 360px, (min-width: 720px) 50vw, 100vw"
+                          sizes="(min-width: 1280px) 290px, (min-width: 1180px) 360px, (min-width: 720px) 50vw, 100vw"
                         />
                       </div>
                     ) : (

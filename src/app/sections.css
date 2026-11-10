@@ -1240,8 +1240,10 @@
     .sec-head > p {
       max-width: 34.6em; /* = 52ch */
     }
+    /* five cards per row at full width; auto-fill keeps card width even when a row isn't full */
     .projects {
-      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 18px;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     }
     .books {
       grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));

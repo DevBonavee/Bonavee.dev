@@ -5,30 +5,9 @@ export type Cv = { role: string; file: string; pages: number; summary: string };
 export const cvs: Cv[] = [
   {
     role: "Full-stack",
-    file: "Nnamah_CV_FullStack.pdf",
+    file: "Chukwuebuka_Bonaventure_Nnamah_CV.pdf",
     pages: 2,
     summary:
-      "Full-stack developer who ships end to end, from FastAPI services and SQLModel schemas to Next.js interfaces, backed by three years of leading projects and teams.",
-  },
-  {
-    role: "Frontend",
-    file: "Nnamah_CV_Frontend.pdf",
-    pages: 2,
-    summary:
-      "Frontend developer building fast, accessible interfaces with React, Next.js, TypeScript and Tailwind, with a designer's eye from years of making campaign visuals.",
-  },
-  {
-    role: "Backend",
-    file: "Nnamah_CV_Backend.pdf",
-    pages: 2,
-    summary:
-      "Backend developer designing typed Python APIs with FastAPI, SQLModel and Alembic, bringing an operations manager's habit of planning for scale and cost.",
-  },
-  {
-    role: "AI / ML",
-    file: "Nnamah_CV_AI.pdf",
-    pages: 2,
-    summary:
-      "AI engineer building LLM features people actually use: agents, retrieval and streaming chat, wired into real products with FastAPI and Next.js.",
+      "Full-stack developer working in Python, FastAPI, TypeScript and Next.js. I built PlastiCash, a plastic buy-back platform with Paystack payouts and 180+ automated tests, and ScreenHive, a cinema booking API, while leading design and technology at Ecocyclers.",
   },
 ];

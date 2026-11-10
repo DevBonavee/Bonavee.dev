@@ -17,15 +17,15 @@ export const books: Book[] = [
     author: "Chip Huyen",
     cover: "/books/ai-engineering.jpg",
     progress: 62,
-    month: "2026-10",
+    month: "2026-11",
     sample: true,
   },
   {
     title: "Designing Data-Intensive Applications",
     author: "Martin Kleppmann",
     cover: "/books/ddia.jpg",
-    progress: 30,
-    month: "2026-10",
+    progress: 100,
+    month: "2026-11",
     sample: true,
   },
   {
@@ -33,7 +33,7 @@ export const books: Book[] = [
     author: "Hunt & Thomas",
     cover: "/books/pragmatic-programmer.jpg",
     progress: 100,
-    month: "2026-10",
+    month: "2026-12",
     sample: true,
   },
 ];

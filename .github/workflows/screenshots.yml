@@ -30,7 +30,7 @@ jobs:
       - name: Take screenshots
         env:
           NODE_PATH: /tmp/shot/node_modules
-          SITE_URL: ${{ vars.SITE_URL || 'https://bonavee.dev' }}
+          SITE_URL: ${{ vars.SITE_URL || 'https://bonavee-dev.vercel.app' }}
         run: node scripts/screenshots.cjs
 
       - name: Commit changes

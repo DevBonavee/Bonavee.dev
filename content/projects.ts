@@ -15,4 +15,14 @@ export type Project = {
   sample?: boolean;
 };
 
-export const projects: Project[] = [];
+export const projects: Project[] = [
+  {
+    // The repo is private, so GitHub can't list it automatically and there is no source link.
+    title: "Bonavee.dev",
+    description:
+      "My own site. It shows whether I'm at my laptop right now, pulls my projects and activity from GitHub, and lists what I'm reading and writing.",
+    image: "/projects/bonavee-dev.png",
+    tags: ["Next.js", "TypeScript", "Tailwind", "Framer Motion"],
+    demo: "https://bonavee-dev.vercel.app",
+  },
+];

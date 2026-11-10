@@ -3,6 +3,7 @@ import { Reveal } from "@/components/motion/reveal";
 import Image from "next/image";
 import Link from "next/link";
 import { getPortfolio } from "@/lib/portfolio";
+import { ClampText } from "./clamp-text";
 import { SampleTag, SecHead } from "./sec-head";
 
 // Drawn stand-ins for a missing screenshot, cycling through three looks.
@@ -98,7 +99,7 @@ export async function Portfolio({ limit }: { limit?: number }) {
                     {p.title}
                     <SampleTag show={p.sample} />
                   </h3>
-                  <p>{p.description}</p>
+                  <ClampText text={p.description} label={p.title} />
                   <div className="chips">
                     {p.tags.map((t) => (
                       <span key={t} className="tag">

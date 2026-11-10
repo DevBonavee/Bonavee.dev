@@ -476,11 +476,33 @@
     gap: 10px;
     flex-wrap: wrap;
   }
-  .proj p {
+  .proj .desc {
+    flex: 1;
+  }
+  .proj .desc p {
     margin: 0;
     color: var(--muted);
     font-size: 15px;
-    flex: 1;
+  }
+  .proj .desc p.clamp {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+  }
+  .proj .more {
+    margin-top: 6px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--accent-text);
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    cursor: pointer;
+  }
+  .proj .more:hover {
+    text-decoration: underline;
   }
   .chips {
     display: flex;

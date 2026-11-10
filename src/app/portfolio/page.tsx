@@ -14,7 +14,7 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Projects",
   description:
-    "Web apps, AI features and n8n/Zapier automations by Bonavee: live projects, services and prices, and how a project runs.",
+    "Web apps, AI features and n8n/Zapier automations by Bonavee: live projects, services, and how a project runs.",
   alternates: { canonical: "/portfolio" },
 };
 
@@ -24,7 +24,7 @@ export default function PortfolioPage() {
     <>
       <PortfolioHero />
       <main>
-        <Portfolio />
+        <Portfolio limit={3} />
         <CaseStudies />
         <Proof />
         <Services />

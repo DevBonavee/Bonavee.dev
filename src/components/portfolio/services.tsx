@@ -67,7 +67,7 @@ export function Services() {
           }
         >
           Fixed-scope projects or ongoing work. Every build is typed end to end, tested, and handed over with
-          docs. <SampleTag show={servicesSample}>sample prices</SampleTag>
+          docs. <SampleTag show={servicesSample}>sample services</SampleTag>
         </SecHead>
         <div className="services">
           {services.map((s, i) => (

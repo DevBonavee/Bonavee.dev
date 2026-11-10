@@ -1,6 +1,7 @@
 import { Container } from "@/components/container";
 import { Reveal } from "@/components/motion/reveal";
 import Image from "next/image";
+import Link from "next/link";
 import { getPortfolio } from "@/lib/portfolio";
 import { SampleTag, SecHead } from "./sec-head";
 
@@ -39,8 +40,10 @@ export function Placeholder({ variant }: { variant: number }) {
   );
 }
 
-export async function Portfolio() {
-  const projects = await getPortfolio();
+// `limit` shows only the newest N cards plus a link to /portfolio/projects, which lists them all.
+export async function Portfolio({ limit }: { limit?: number }) {
+  const all = await getPortfolio();
+  const projects = limit ? all.slice(0, limit) : all;
   const anySample = projects.some((p) => p.sample);
 
   return (
@@ -58,7 +61,9 @@ export async function Portfolio() {
             </>
           }
         >
-          Live sites I built, with the source. New repos show up here on their own.{" "}
+          {limit
+            ? "My latest live sites, with the source. New repos show up here on their own."
+            : "Every live site I've built, newest first, with the source."}{" "}
           <SampleTag show={anySample}>sample projects</SampleTag>
         </SecHead>
 
@@ -120,6 +125,11 @@ export async function Portfolio() {
             </Reveal>
           ))}
         </div>
+        {limit && all.length > limit ? (
+          <p className="all-posts">
+            <Link href="/portfolio/projects">See all {all.length} projects →</Link>
+          </p>
+        ) : null}
       </Container>
     </section>
   );

@@ -1,7 +1,7 @@
 // "What you can hire me for" on /portfolio. One card per entry, in this order.
 // `featured: true` makes the card span two columns with a "Most requested" tag; `flow` is the
-// little animated workflow strip on that card. Leave `priceFrom` out to hide the price line.
-// `sample: true` on the export below shows a "sample prices" tag; set it to false once prices are real.
+// little animated workflow strip on that card. Add `priceFrom` (and optional `priceUnit`) to show a "from $X" line; none are shown now.
+// `sample: true` on the export below shows a "sample services" tag; set it to false once the copy is real.
 import type { Service } from "@/lib/content/schema";
 
 export const servicesSample = true;
@@ -18,8 +18,6 @@ export const services: Service[] = [
       "AI agents with OpenAI and Claude",
       "Connect Gmail, Sheets, CRMs and Slack",
     ],
-    priceFrom: "$400",
-    priceUnit: "per workflow",
     featured: true,
     flow: ["New lead", "n8n", "AI scores it", "CRM + Slack"],
   },
@@ -29,7 +27,6 @@ export const services: Service[] = [
     category: "Web apps",
     description: "Dashboards, portals and SaaS products with accounts, payments and real data.",
     deliverables: ["Next.js + TypeScript", "Auth, roles, payments", "Deployed on Vercel"],
-    priceFrom: "$1,500",
   },
   {
     title: "AI features",
@@ -37,7 +34,6 @@ export const services: Service[] = [
     category: "AI",
     description: "Chat assistants, document Q&A and agents that do real work inside your product.",
     deliverables: ["RAG over your docs", "Agents and tool use", "Streaming chat UI"],
-    priceFrom: "$1,200",
   },
   {
     title: "APIs & backends",
@@ -45,7 +41,6 @@ export const services: Service[] = [
     category: "APIs",
     description: "Fast, documented Python APIs with clean data models and safe migrations.",
     deliverables: ["FastAPI + SQLModel", "Postgres + Alembic", "OpenAPI docs"],
-    priceFrom: "$900",
   },
   {
     title: "Websites",
@@ -53,6 +48,5 @@ export const services: Service[] = [
     category: "Websites",
     description: "Fast, animated marketing sites and landing pages that load in under a second.",
     deliverables: ["Next.js + Tailwind", "Motion and SEO", "Editable content"],
-    priceFrom: "$600",
   },
 ];

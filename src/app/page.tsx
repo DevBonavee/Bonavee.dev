@@ -1,7 +1,6 @@
 import { site } from "@content/site";
 import { Hero } from "@/components/hero/hero";
 import { About } from "@/components/portfolio/about";
-import { Portfolio } from "@/components/sections/portfolio";
 import { GitHubSection } from "@/components/live/github-section";
 import { WritingSection } from "@/components/live/writing-section";
 import { Building } from "@/components/sections/building";
@@ -49,7 +48,6 @@ export default function Home() {
       <Hero />
       <main>
         <About />
-        <Portfolio limit={4} />
         <Marquee />
         <Hire />
         <Building />

@@ -512,6 +512,18 @@
     .nav .status {
       display: none;
     }
+    /* phones: menu links at a readable size, padded so each stays a comfortable tap target */
+    .menu-sheet ul {
+      gap: 2px;
+    }
+    .menu-sheet li a {
+      font-size: 22px;
+      letter-spacing: -0.02em;
+      padding-block: 9px;
+    }
+    .menu-sheet li a small {
+      font-size: 11px;
+    }
   }
   /* Narrow phones: the theme toggle moves into the menu sheet so the menu button fits. */
   @media (max-width: 440px) {

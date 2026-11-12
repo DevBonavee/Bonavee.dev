@@ -24,12 +24,12 @@ export default function PortfolioPage() {
     <>
       <PortfolioHero />
       <main>
+        <About />
         <Portfolio limit={4} />
         <CaseStudies />
         <Proof />
         <Services />
         <Process />
-        <About />
         <PortfolioCta />
       </main>
     </>

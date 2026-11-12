@@ -23,7 +23,7 @@ function useActive(pathname: string) {
   useEffect(() => {
     const ids = TRACKED[pathname];
     if (!ids) return;
-    // On the homepage the hero, about, projects, hire card, stack and contact have no link: they clear the underline to "home".
+    // On the homepage the hero, about, hire card, stack and contact have no link: they clear the underline to "home".
     const fallback = pathname === "/" ? "top" : ids[0];
     setSection(fallback);
     const band = { rootMargin: "-45% 0px -50% 0px" };
@@ -31,7 +31,7 @@ function useActive(pathname: string) {
       for (const e of entries)
         if (e.isIntersecting) setSection(ids.includes(e.target.id) ? e.target.id : fallback);
     }, band);
-    [...(pathname === "/" ? ["top", "about", "projects", "hire"] : []), ...ids].forEach((id) => {
+    [...(pathname === "/" ? ["top", "about", "hire"] : []), ...ids].forEach((id) => {
       const el = document.getElementById(id);
       if (el) io.observe(el);
     });

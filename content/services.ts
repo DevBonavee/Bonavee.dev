@@ -29,13 +29,6 @@ export const services: Service[] = [
     deliverables: ["Next.js + TypeScript", "Auth, roles, payments", "Deployed on Vercel"],
   },
   {
-    title: "AI features",
-    icon: "ai",
-    category: "AI",
-    description: "Chat assistants, document Q&A and agents that do real work inside your product.",
-    deliverables: ["RAG over your docs", "Agents and tool use", "Streaming chat UI"],
-  },
-  {
     title: "APIs & backends",
     icon: "api",
     category: "APIs",

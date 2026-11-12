@@ -865,9 +865,19 @@
     flex-direction: column;
     justify-content: space-between;
   }
+  /* An odd fact out on the two-column grid takes the full row instead of leaving a hole. */
+  .about-facts > div:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
   @media (min-width: 1180px) {
+    /* One row, however many facts there are. */
     .about-facts {
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: none;
+      grid-auto-flow: column;
+      grid-auto-columns: 1fr;
+    }
+    .about-facts > div:last-child:nth-child(odd) {
+      grid-column: auto;
     }
     .about-facts > div + div {
       padding-left: 20px;

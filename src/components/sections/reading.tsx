@@ -59,7 +59,7 @@ export function Reading() {
                       src={b.cover}
                       alt={`Cover of ${b.title}`}
                       fill
-                      sizes="(min-width: 900px) 260px, (min-width: 480px) 45vw, 100vw"
+                      sizes="(min-width: 900px) 260px, (min-width: 600px) 45vw, 84px"
                     />
                   ) : (
                     <>

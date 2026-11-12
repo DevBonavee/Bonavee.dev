@@ -9,7 +9,6 @@ export const about: About = {
     "Outside client work I volunteer with climate communities, speak on environmental topics, and write about what I learn building with AI.",
   ],
   facts: [
-    { label: "Leading projects", value: "3 years", count: 3, suffix: " years" },
     { label: "Initiatives led", value: "10+", count: 10, suffix: "+" },
     { label: "Community members engaged", value: "100+", count: 100, suffix: "+" },
     { label: "Languages", value: "English, Igbo" },

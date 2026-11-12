@@ -1,6 +1,6 @@
 // Quotes for the "Proof, not promises" card on /portfolio. It rotates through them in this order.
 // These are placeholders: replace each with a real quote and the person's real name and role,
-// then delete `sample: true`. Put photos in public/people/ and set `avatar`; without one, initials show.
+// then delete `sample: true`. Quotes still marked `sample` show in `pnpm dev` only, never on the live site. Put photos in public/people/ and set `avatar`; without one, initials show.
 // `id` lets a case study link to the quote (its `testimonial:` field); `project` is the case-study slug.
 import type { Testimonial, WorkedWith } from "@/lib/content/schema";
 

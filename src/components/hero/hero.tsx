@@ -1,8 +1,8 @@
 import { Container } from "@/components/container";
 import Link from "next/link";
 import { site } from "@content/site";
-import { portfolio } from "@/lib/content";
 import { getHeroPhotos } from "@/lib/hero-photos";
+import { getStats } from "@/lib/stats";
 import { CodeName } from "./code-name";
 import { FieldCanvas } from "./field-canvas";
 import { Greeting } from "./greeting";
@@ -33,11 +33,11 @@ const Arrow = ({ w = "2.4" }: { w?: string }) => (
   </svg>
 );
 
-export function Hero() {
+export async function Hero() {
   const photos = getHeroPhotos();
   const { availability } = site;
   // Stats marked `home` in content/portfolio.ts, so the two heroes always agree.
-  const homeStats = portfolio.stats.filter((st) => st.home);
+  const homeStats = (await getStats()).filter((st) => st.home);
   const [label, quarter] = availability.label.split(/(?= this quarter)/);
 
   return (

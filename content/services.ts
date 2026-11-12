@@ -4,7 +4,7 @@
 // `sample: true` on the export below shows a "sample services" tag; set it to false once the copy is real.
 import type { Service } from "@/lib/content/schema";
 
-export const servicesSample = true;
+export const servicesSample = false;
 
 export const services: Service[] = [
   {

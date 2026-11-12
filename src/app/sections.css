@@ -815,6 +815,59 @@
     font-size: 12px;
     color: var(--faint);
   }
+  /* Phones: each book is a card, a small cover beside the details, instead of a full-width cover. */
+  @media (max-width: 599px) {
+    .books {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .book {
+      grid-template-columns: 84px 1fr;
+      align-items: center;
+      gap: 18px;
+      padding: 14px 18px 14px 14px;
+      background: var(--raise);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+    }
+    .cover {
+      transform: rotateY(-10deg);
+      box-shadow: 10px 12px 22px -12px rgba(0, 0, 0, 0.55);
+      border-radius: 3px 7px 7px 3px;
+      padding: 10px 8px 10px 13px;
+    }
+    .cover::before {
+      width: 6px;
+    }
+    /* The title sits right beside the cover, so the drawn covers keep only their art at this size. */
+    .cover .ca,
+    .cover .ct {
+      display: none;
+    }
+    .cover.c1 .art {
+      right: -14px;
+      bottom: 34px;
+      width: 58px;
+      height: 58px;
+      border-width: 7px;
+    }
+    .cover.c2 .art {
+      inset: auto 9px 18px 14px;
+      height: 34px;
+      background: repeating-linear-gradient(90deg, #172923 0 2px, transparent 2px 5px);
+    }
+    .cover.c3 .art {
+      right: 8px;
+      top: 24px;
+      width: 36px;
+      height: 36px;
+      border-radius: 4px;
+    }
+    .book .info {
+      align-content: center;
+      min-width: 0;
+    }
+  }
   .readbar {
     height: 4px;
     border-radius: 4px;

@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Container } from "@/components/container";
 import { Reveal } from "@/components/motion/reveal";
 import { SampleTag, SecHead } from "@/components/sections/sec-head";
-import { portfolio, testimonials, workedWith } from "@/lib/content";
+import { portfolio, publicTestimonials as testimonials, workedWith } from "@/lib/content";
 import { Avatar } from "./bits";
 import { GoogleReviewsBlock } from "./google-reviews";
 import { QuoteRotator } from "./quote-rotator";
@@ -27,7 +27,9 @@ export function Proof() {
             </>
           }
         >
-          From clients and teammates.{" "}
+          {quotes.length > 0
+            ? "From clients and teammates."
+            : "Teams I've worked with, and what I've earned along the way."}{" "}
           <SampleTag show={testimonials.some((t) => t.sample)}>
             sample quotes: replace with real ones
           </SampleTag>

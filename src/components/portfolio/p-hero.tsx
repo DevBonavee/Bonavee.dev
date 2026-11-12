@@ -1,6 +1,7 @@
 import { Container } from "@/components/container";
 import { SampleTag } from "@/components/sections/sec-head";
 import { portfolio } from "@/lib/content";
+import { getStats } from "@/lib/stats";
 import { AvailLine } from "./avail-line";
 import { Arrow, booking, Marked, Value } from "./bits";
 
@@ -13,7 +14,8 @@ const JUMPS = [
 ];
 
 // The value line: what I build and why it matters, with the proof numbers beside it.
-export function PortfolioHero() {
+export async function PortfolioHero() {
+  const stats = await getStats();
   return (
     <header className="phero" id="top">
       <Container>
@@ -37,7 +39,7 @@ export function PortfolioHero() {
         <aside className="card phero-card" aria-label="At a glance">
           <AvailLine />
           <dl className="pstats">
-            {portfolio.stats.map((st) => (
+            {stats.map((st) => (
               <div key={st.label}>
                 <dt>{st.label}</dt>
                 <dd>

@@ -37,6 +37,10 @@ export const about = check("about.ts", s.aboutSchema, rawAbout);
 export const portfolio = check("portfolio.ts", s.portfolioSchema, rawPortfolio);
 check("site.ts", s.siteSchema, rawSite);
 
+// Placeholder quotes (`sample: true`) show in `pnpm dev` so the layout is visible, but never on the live site.
+export const publicTestimonials =
+  process.env.NODE_ENV === "production" ? testimonials.filter((t) => !t.sample) : testimonials;
+
 const ids = testimonials.flatMap((t) => (t.id ? [t.id] : []));
 const dupe = ids.find((id, i) => ids.indexOf(id) !== i);
 if (dupe) throw new Error(`content/testimonials.ts: two testimonials share the id "${dupe}"`);

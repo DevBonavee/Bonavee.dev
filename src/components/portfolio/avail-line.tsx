@@ -1,14 +1,12 @@
-"use client";
+import { site } from "@content/site";
 
-import { useLiveStatus } from "@/components/status/status-provider";
-
-// "Available for new projects", with the same live dot as the nav pill.
+// Whether I'm taking projects is a business fact from content/site.ts, not whether the laptop is online.
 export function AvailLine() {
-  const online = useLiveStatus()?.online ?? false;
+  const open = site.availability.open;
   return (
-    <div className={online ? "pavail is-working" : "pavail"}>
+    <div className={open ? "pavail is-working" : "pavail"}>
       <span className="dot" aria-hidden="true" />
-      <span>Available for new projects</span>
+      <span>{open ? "Available for new projects" : "Not taking new projects right now"}</span>
     </div>
   );
 }

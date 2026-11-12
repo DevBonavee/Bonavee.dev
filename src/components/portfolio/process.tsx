@@ -19,7 +19,7 @@ export function Process() {
             </>
           }
         >
-          Five steps, the same every time, so you always know what happens next and what it costs.
+          Five steps, the same every time, so you always know what happens next.
         </SecHead>
         <ProcessSteps steps={processSteps} />
       </Container>

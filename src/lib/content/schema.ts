@@ -103,6 +103,8 @@ export const statSchema = z.object({
   count: z.number().optional(),
   suffix: z.string().optional(),
   home: z.string().optional(), // set to show this stat in the homepage hero, under this label
+  // Count it from the site instead of typing it: "projects" = live projects, "services" = service cards.
+  from: z.enum(["projects", "services"]).optional(),
 });
 export const portfolioSchema = z.object({
   headline: text,

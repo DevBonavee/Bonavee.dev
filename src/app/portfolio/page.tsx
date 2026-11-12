@@ -24,7 +24,7 @@ export default function PortfolioPage() {
     <>
       <PortfolioHero />
       <main>
-        <Portfolio limit={5} />
+        <Portfolio limit={4} />
         <CaseStudies />
         <Proof />
         <Services />

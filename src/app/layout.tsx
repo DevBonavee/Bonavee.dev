@@ -6,6 +6,7 @@ import { PageWipe } from "@/components/motion/page-wipe";
 import { PointerFx } from "@/components/motion/pointer-fx";
 import { Nav } from "@/components/nav/nav";
 import { Providers } from "@/components/providers";
+import { ScrollJump } from "@/components/scroll-jump";
 import { INTRO_SCRIPT } from "@/lib/intro";
 // Validates every file in content/ at build time; a typo fails the build with a clear message.
 import "@/lib/content";
@@ -80,6 +81,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <Nav />
           {children}
           <Footer />
+          <ScrollJump />
           <PageWipe />
         </Providers>
       </body>

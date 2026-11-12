@@ -100,7 +100,7 @@ export function Hero() {
           <StatusCard />
         </div>
       </Container>
-      <a className="scroll-cue" href="#hire" aria-label="Scroll down">
+      <a className="scroll-cue" href="#about" aria-label="Scroll down">
         <i />
         scroll
       </a>

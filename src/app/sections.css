@@ -1262,10 +1262,10 @@
     .sec-head > p {
       max-width: 34.6em; /* = 52ch */
     }
-    /* five cards per row at full width; auto-fill keeps card width even when a row isn't full */
+    /* up to five cards per row; auto-fit lets a short list (the 4-card sections) fill the row */
     .projects {
       gap: 18px;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     }
     .books {
       grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));

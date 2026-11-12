@@ -989,3 +989,76 @@
     animation: none;
   }
 }
+
+/* ---------- fit the whole hero on one screen (1366×768 laptops and up) ----------
+   Spacing, the name and the photo scale with the viewport height, so the hero never runs past the fold.
+   Tall screens hit the clamp maximums and look as before. */
+@layer components {
+  @media (min-width: 960px) {
+    .hero {
+      min-height: min(100svh, 980px);
+    }
+    .hero-grid {
+      /* top clears the floating nav (14px + bar) */
+      padding-block: clamp(84px, 13svh, 150px) clamp(28px, 6svh, 120px);
+    }
+    .hero .avail {
+      margin-bottom: clamp(12px, 2.6svh, 26px);
+    }
+    .hero .fullname {
+      margin: clamp(8px, 2.2svh, 22px) 0 clamp(6px, 1.8svh, 18px);
+    }
+    .hero .lede {
+      font-size: clamp(16px, min(1.8vw, 3svh), 21px);
+      margin-top: clamp(10px, 2.4svh, 30px);
+    }
+    .hero .cta-row {
+      margin-top: clamp(14px, 3.6svh, 42px);
+    }
+    .hero-stats {
+      margin-top: clamp(14px, 3.8svh, 46px);
+      padding-top: clamp(12px, 2.4svh, 24px);
+    }
+    /* photo width follows the height left after nav and padding, keeping its 4:5 frame */
+    .hero-right {
+      --pw: min(400px, calc((100svh - 280px) * 0.8));
+      padding-block: 12px 20px;
+    }
+    .hero-right .portrait,
+    .hero-right .backcard {
+      width: min(100%, var(--pw));
+    }
+    .hero-right .orbit {
+      width: min(118%, calc(var(--pw) * 1.3));
+    }
+    .hero-right .orbit.o2 {
+      width: min(96%, calc(var(--pw) * 1.08));
+    }
+  }
+  @media (min-width: 1280px) {
+    .hero .lede {
+      font-size: clamp(16px, 3.2svh, 22px);
+    }
+    .hero-right {
+      --pw: min(480px, calc((100svh - 280px) * 0.8));
+    }
+    .hero-right .orbit {
+      width: min(122%, calc(var(--pw) * 1.29));
+    }
+  }
+  @media (min-width: 1440px) {
+    /* keep the status card's overlap proportional to the (smaller) photo */
+    .hero .hero-right .console {
+      right: calc(var(--pw) * 0.65);
+    }
+  }
+  /* phones and tablets: content stacks; keep the photo smaller */
+  @media (max-width: 959px) {
+    .hero-right .portrait {
+      width: min(100%, 300px);
+    }
+    .hero-right .backcard {
+      width: min(calc(100% - 20px), 300px);
+    }
+  }
+}

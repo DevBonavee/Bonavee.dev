@@ -703,3 +703,79 @@
     }
   }
 }
+
+/* ---------- floating scroll-to-top / bottom button ---------- */
+@layer components {
+  .scroll-jump {
+    position: fixed;
+    z-index: 48; /* under the nav (50) and the menu sheet (49) */
+    right: max(16px, env(safe-area-inset-right, 0px));
+    bottom: max(16px, env(safe-area-inset-bottom, 0px));
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border-radius: 12px;
+    border: 1px solid var(--line-strong);
+    background: color-mix(in srgb, var(--raise) 82%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--fg);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px);
+    transition:
+      opacity 0.3s,
+      visibility 0.3s,
+      transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+      background 0.2s,
+      color 0.2s,
+      border-color 0.2s;
+  }
+  .scroll-jump.on {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+  .scroll-jump svg {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.35s cubic-bezier(0.3, 1.25, 0.45, 1);
+  }
+  .scroll-jump.up svg {
+    transform: rotate(180deg);
+  }
+  .scroll-jump:hover {
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-color: transparent;
+    transform: translateY(-3px);
+  }
+  @media (min-width: 720px) {
+    .scroll-jump {
+      right: max(24px, env(safe-area-inset-right, 0px));
+      bottom: max(24px, env(safe-area-inset-bottom, 0px));
+      width: 48px;
+      height: 48px;
+    }
+  }
+  /* phones: smaller and see-through until touched, so it never hides content */
+  @media (max-width: 719px) {
+    .scroll-jump {
+      width: 40px;
+      height: 40px;
+    }
+    .scroll-jump.on {
+      opacity: 0.78;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-jump,
+    .scroll-jump svg {
+      transition: none;
+    }
+  }
+}

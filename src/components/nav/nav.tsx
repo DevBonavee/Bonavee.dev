@@ -3,7 +3,7 @@
 import { AnimatePresence, m } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { navLinks, site } from "@content/site";
 import { StatusPill } from "./status-pill";
 import { ThemeToggle } from "./theme-toggle";
@@ -58,16 +58,23 @@ export function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close the menu on navigation and on Escape; lock page scroll while it is open.
+  const sheetRef = useRef<HTMLDivElement>(null);
+  const btnRef = useRef<HTMLButtonElement>(null);
+
+  // Close the dropdown on navigation, on Escape and on a tap outside it.
   useEffect(() => setOpen(false), [pathname]);
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const onDown = (e: PointerEvent) => {
+      const t = e.target as Node;
+      if (!sheetRef.current?.contains(t) && !btnRef.current?.contains(t)) setOpen(false);
+    };
     document.addEventListener("keydown", onKey);
-    document.documentElement.style.overflow = "hidden";
+    document.addEventListener("pointerdown", onDown);
     return () => {
       document.removeEventListener("keydown", onKey);
-      document.documentElement.style.overflow = "";
+      document.removeEventListener("pointerdown", onDown);
     };
   }, [open]);
 
@@ -111,6 +118,7 @@ export function Nav() {
               Book a call
             </a>
             <button
+              ref={btnRef}
               type="button"
               className="icon-btn menu-btn"
               aria-expanded={open}
@@ -135,23 +143,22 @@ export function Nav() {
       <AnimatePresence>
         {open && (
           <m.div
+            ref={sheetRef}
             id="menu-sheet"
             className="menu-sheet"
-            role="dialog"
-            aria-modal="true"
             aria-label="Menu"
-            initial={{ clipPath: "inset(0 0 100% 0)" }}
-            animate={{ clipPath: "inset(0 0 0% 0)" }}
-            exit={{ clipPath: "inset(0 0 100% 0)" }}
-            transition={{ duration: 0.6, ease: EASE }}
+            initial={{ clipPath: "inset(0 0 100% 0 round 18px)", opacity: 0 }}
+            animate={{ clipPath: "inset(0 0 0% 0 round 18px)", opacity: 1 }}
+            exit={{ clipPath: "inset(0 0 100% 0 round 18px)", opacity: 0 }}
+            transition={{ duration: 0.35, ease: EASE }}
           >
             <ul>
               {navLinks.map((l, i) => (
                 <m.li
                   key={l.id}
-                  initial={{ opacity: 0, y: 24 }}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.18 + i * 0.05, ease: [0.2, 0.8, 0.2, 1] }}
+                  transition={{ duration: 0.35, delay: 0.08 + i * 0.03, ease: [0.2, 0.8, 0.2, 1] }}
                 >
                   <Link
                     href={l.href}
@@ -165,7 +172,7 @@ export function Nav() {
               ))}
             </ul>
             <div className="menu-foot">
-              <a className="btn" {...booking}>
+              <a className="btn sm" {...booking}>
                 Book a call
               </a>
               <span className="mono text-muted text-[13px]">{site.email}</span>

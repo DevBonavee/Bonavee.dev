@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "git pull --ff-only -q || echo \"git pull skipped\"",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
